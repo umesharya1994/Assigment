@@ -1,0 +1,243 @@
+"1. What is the difference between a function and a method in Python?",
+     "Answer:\n• Function: A function is a block of code that performs a specific task and can be called independently. It is defined using the 'def' keyword and can exist on its own.\n• Method: A method is a function that is associated with an object and is called on that object. It always has 'self' as the first parameter when defined in a class.\n\nExample:\nFunction: len(), print(), sorted()\nMethod: list.append(), string.upper(), dict.keys()"),
+    
+    ("2. Explain the concept of function arguments and parameters in Python.",
+     "Answer:\n• Parameters: These are the variables listed in the function definition that receive values when the function is called.\n• Arguments: These are the actual values passed to the function when calling it.\n\nTypes of arguments:\n1. Positional arguments: Passed in order\n2. Keyword arguments: Passed with parameter names\n3. Default arguments: Have default values\n4. Variable-length arguments: *args (tuple) and **kwargs (dictionary)"),
+    
+    ("3. What are the different ways to define and call a function in Python?",
+     "Answer:\nWays to define functions:\n1. Regular function using 'def'\n2. Lambda function (anonymous)\n3. Nested function (function inside function)\n4. Recursive function (calls itself)\n\nWays to call functions:\n1. Direct call: function_name()\n2. With arguments: function_name(args)\n3. As part of expression: result = function_name()\n4. Using map/filter: map(function, iterable)"),
+    
+    ("4. What is the purpose of the 'return' statement in a Python function?",
+     "Answer:\nThe 'return' statement:\n• Exits the function and sends a value back to the caller\n• Can return multiple values as a tuple\n• If no return statement, function returns None\n• Stops function execution immediately\n\nExample:\ndef add(a, b):\n    return a + b  # Returns the sum\nresult = add(5, 3)  # result = 8"),
+    
+    ("5. What are iterators in Python and how do they differ from iterables?",
+     "Answer:\n• Iterable: An object that can be looped over (has __iter__() method). Examples: lists, tuples, strings, dictionaries.\n• Iterator: An object that keeps state and produces next value when next() is called (has __next__() method).\n\nDifference:\n- All iterators are iterables, but not all iterables are iterators\n- Iterables can be converted to iterators using iter()\n- Iterators are consumed after iteration, iterables can be reused"),
+    
+    ("6. Explain the concept of generators in Python and how they are defined.",
+     "Answer:\nGenerators are functions that yield values one at a time using the 'yield' keyword instead of 'return'. They maintain state between calls and generate values on-the-fly.\n\nDefining generators:\n1. Using yield keyword:\n   def count_up_to(n):\n       i = 1\n       while i <= n:\n           yield i\n           i += 1\n\n2. Using generator expressions:\n   gen = (x**2 for x in range(5))"),
+    
+    ("7. What are the advantages of using generators over regular functions?",
+     "Answer:\nAdvantages:\n1. Memory efficient: Generate values on-demand, don't store entire sequence\n2. Represent infinite sequences: Can generate values indefinitely\n3. State preservation: Remember their state between calls\n4. Lazy evaluation: Compute values only when needed\n5. Improved performance: For large datasets, faster than lists\n\nUse Case: Processing large files line by line without loading entire file"),
+    
+    ("8. What is a lambda function in Python and when is it typically used?",
+     "Answer:\nLambda functions are small, anonymous functions defined using the 'lambda' keyword. They can have any number of arguments but only one expression.\n\nSyntax: lambda arguments: expression\n\nTypical uses:\n• With map(), filter(), reduce()\n• As key functions in sorting (sorted(), sort())\n• For simple, one-time operations\n• In GUI programming for callbacks\n\nExample: square = lambda x: x**2"),
+    
+    ("9. Explain the purpose and usage of the 'map()' function in Python.",
+     "Answer:\nmap() applies a given function to all items in an input iterable and returns an iterator.\n\nSyntax: map(function, iterable1, iterable2, ...)\n\nPurpose:\n• Transform all elements in a collection\n• Apply same operation to multiple elements\n• More efficient than loops for large datasets\n\nExample:\nnumbers = [1, 2, 3, 4]\nsquared = list(map(lambda x: x**2, numbers))  # [1, 4, 9, 16]"),
+    
+    ("10. What is the difference between 'map()', 'reduce()', and 'filter()' functions in Python?",
+     "Answer:\n• map(): Applies a function to all items and returns transformed items\n  map(lambda x: x*2, [1,2,3]) → [2,4,6]\n\n• filter(): Returns items that satisfy a condition (function returns True)\n  filter(lambda x: x>2, [1,2,3,4]) → [3,4]\n\n• reduce(): Applies a function cumulatively to reduce sequence to single value\n  reduce(lambda x,y: x+y, [1,2,3,4]) → 10\n\nreduce() is in functools module, others are built-in."),
+    
+    ("11. Internal mechanism for sum operation using reduce on [47, 11, 42, 13]:",
+     "Answer:\n\nStep-by-step process using reduce():\n\nfrom functools import reduce\nresult = reduce(lambda x, y: x + y, [47, 11, 42, 13])\n\nInternal mechanism:\n\nStep 1: Take first two elements: 47 + 11 = 58\nStep 2: Take result (58) and next element: 58 + 42 = 100\nStep 3: Take result (100) and last element: 100 + 13 = 113\n\nFinal result: 113\n\nVisual representation:\n[47, 11, 42, 13]\n   ↓    ↓\n   47 + 11 = 58\n              ↓    ↓\n              58 + 42 = 100\n                        ↓    ↓\n                        100 + 13 = 113")
+]
+
+for q, a in questions_answers:
+    pdf.question_answer(q, a)
+
+# Practical Questions (1-11)
+pdf.add_page()
+pdf.chapter_title("Practical Questions (1-11)")
+
+practical_code = '''# 1. Function to sum all even numbers in a list
+def sum_even_numbers(numbers):
+    """Return sum of all even numbers in the list"""
+    return sum(num for num in numbers if num % 2 == 0)
+
+# Test
+print("1. Sum of evens:", sum_even_numbers([1, 2, 3, 4, 5, 6]))  # 2+4+6 = 12
+
+# 2. Function to reverse a string
+def reverse_string(s):
+    """Return the reverse of the input string"""
+    return s[::-1]
+
+# Test
+print("2. Reverse of 'hello':", reverse_string("hello"))  # 'olleh'
+
+# 3. Function to return squares of each number
+def square_list(numbers):
+    """Return new list containing squares of each number"""
+    return [x**2 for x in numbers]
+
+# Test
+print("3. Squares:", square_list([1, 2, 3, 4]))  # [1, 4, 9, 16]
+
+# 4. Function to check if a number is prime (1 to 200)
+def is_prime(n):
+    """Check if a number is prime (for numbers 1 to 200)"""
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def check_prime_range():
+    """Check all numbers from 1 to 200 and return primes"""
+    primes = [n for n in range(1, 201) if is_prime(n)]
+    return primes
+
+# Test
+print("4. Primes from 1-200:", check_prime_range()[:10], "...")  # First 10 primes
+
+# 5. Iterator class for Fibonacci sequence
+class FibonacciIterator:
+    """Iterator that generates Fibonacci sequence up to specified terms"""
+    def __init__(self, n_terms):
+        self.n_terms = n_terms
+        self.current = 0
+        self.next = 1
+        self.count = 0
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.count >= self.n_terms:
+            raise StopIteration
+        if self.count == 0:
+            self.count += 1
+            return 0
+        elif self.count == 1:
+            self.count += 1
+            return 1
+        else:
+            self.current, self.next = self.next, self.current + self.next
+            self.count += 1
+            return self.next
+
+# Test
+fib = FibonacciIterator(10)
+print("5. Fibonacci (10 terms):", list(fib))
+
+# 6. Generator function for powers of 2
+def powers_of_two(max_exp):
+    """Yield powers of 2 up to given exponent"""
+    for i in range(max_exp + 1):
+        yield 2 ** i
+
+# Test
+print("6. Powers of 2 (exp 0-5):", list(powers_of_two(5)))
+
+# 7. Generator function to read file line by line
+def read_file_lines(filename):
+    """Generator that reads a file line by line"""
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                yield line.strip()
+    except FileNotFoundError:
+        yield f"File {filename} not found"
+
+# Note: This would require an actual file to test
+print("7. File line reader generator created")
+
+# 8. Sort list of tuples by second element using lambda
+tuples_list = [(1, 3), (4, 1), (2, 2), (5, 0)]
+sorted_list = sorted(tuples_list, key=lambda x: x[1])
+
+print("8. Sorted by second element:", sorted_list)
+
+# 9. Convert Celsius to Fahrenheit using map()
+celsius_temps = [0, 20, 30, 40, 100]
+fahrenheit_temps = list(map(lambda c: (c * 9/5) + 32, celsius_temps))
+
+print("9. Celsius to Fahrenheit:")
+for c, f in zip(celsius_temps, fahrenheit_temps):
+    print(f"   {c}°C = {f}°F")
+
+# 10. Remove vowels from string using filter()
+def remove_vowels(text):
+    """Remove all vowels from a string using filter"""
+    vowels = 'aeiouAEIOU'
+    return ''.join(filter(lambda char: char not in vowels, text))
+
+# Test
+sample_text = "Hello World! This is Python."
+print("10. Original:", sample_text)
+print("    Without vowels:", remove_vowels(sample_text))
+
+# 11. Book shop accounting routine using lambda and map
+orders = [
+    [34587, "Learning Python, Mark Lutz", 4, 40.95],
+    [98762, "Programming Python, Mark Lutz", 5, 56.80],
+    [77226, "Head First Python, Paul Barry", 3, 32.95],
+    [88112, "Einführung in Python3, Bernd Klein", 3, 24.99]
+]
+
+def process_orders(orders):
+    """
+    Returns list of tuples (order_number, total_price)
+    Add 10€ if total < 100€
+    """
+    return list(map(
+        lambda order: (
+            order[0],  # order number
+            order[2] * order[3] + (10 if order[2] * order[3] < 100 else 0)
+        ),
+        orders
+    ))
+
+# Process and display results
+print("\n11. Book Shop Orders Processing:")
+print("-" * 50)
+result_orders = process_orders(orders)
+for order_num, total in result_orders:
+    print(f"Order #{order_num}: €{total:.2f}")
+print("-" * 50)
+
+# Additional explanation
+print("\nExplanation: For each order, we calculate quantity × price per item")
+print("If the total is less than €100, we add €10 to the total")
+'''
+
+pdf.set_font('Arial', 'B', 12)
+pdf.cell(0, 6, "Python Code Solutions for Practical Questions:", 0, 1)
+pdf.ln(2)
+
+# Split code into smaller chunks for better readability
+code_lines = practical_code.split('\n')
+for line in code_lines:
+    if line.strip().startswith('#') and not line.strip().startswith('# Test'):
+        pdf.set_font('Arial', 'B', 10)
+        pdf.cell(0, 4, line, 0, 1)
+        pdf.set_font('Courier', '', 9)
+    else:
+        pdf.set_font('Courier', '', 9)
+        pdf.cell(0, 4, line, 0, 1)
+
+# Note about Question 11 (paper image)
+pdf.add_page()
+pdf.chapter_title("Question 11 - Reduce Function Visual Explanation")
+
+pdf.set_font('Arial', '', 11)
+pdf.multi_cell(0, 6, """For question 11, here's a visual representation of how reduce() works with the sum operation on [47, 11, 42, 13]:
+
+
+REDUCE OPERATION VISUALIZATION:
+══════════════════════════════════
+
+Initial list: [47, 11, 42, 13]
+
+Step 1: 47 + 11 = 58
+        ↓    ↓
+      [47,  11,  42,  13]
+        └──┬──┘
+           58
+
+Step 2: 58 + 42 = 100
+            ↓    ↓
+      [58,  42,  13]
+        └──┬──┘
+          100
+
+Step 3: 100 + 13 = 113
+             ↓    ↓
+      [100,  13]
+        └───┬───┘
+           113
+
+══════════════════════════════════
+FINAL RESULT: 113
+
