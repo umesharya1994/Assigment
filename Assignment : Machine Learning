@@ -1,0 +1,1452 @@
+Machine Learning Intro | Assignment Answers
+Question 1: Explain the differences between AI, ML, Deep Learning (DL), and Data Science (DS).
+Answer:
+
+These four fields are closely related but have distinct scopes and focuses:
+
+Concept	Definition	Scope	Example
+Artificial Intelligence (AI)	The broad field of creating machines that can perform tasks requiring human-like intelligence.	Broadest concept; encompasses ML, DL, and rule-based systems	Chess-playing computer, voice assistants (Siri, Alexa)
+Machine Learning (ML)	A subset of AI where systems learn from data without being explicitly programmed.	Narrower than AI; focuses on algorithms that improve with experience	Spam email detection, recommendation systems
+Deep Learning (DL)	A subset of ML using neural networks with multiple layers to learn complex patterns.	Narrower than ML; requires large amounts of data and computing power	Image recognition, natural language processing, self-driving cars
+Data Science (DS)	An interdisciplinary field that uses scientific methods, algorithms, and systems to extract insights from data.	Overlaps with all above; includes statistics, data engineering, and domain expertise	Customer behavior analysis, business intelligence, predictive modeling
+Visual Relationship:
+
+AI is the umbrella term
+
+ML is a subset of AI
+
+DL is a subset of ML
+
+Data Science is a broader field that uses AI/ML/DL as tools alongside statistics and domain knowledge
+
+Question 2: What are the types of machine learning? Describe each with one real-world example.
+Answer:
+
+Machine learning is typically categorized into three main types:
+
+Type	Description	Real-World Example
+Supervised Learning	Model learns from labeled data (input-output pairs) to predict outputs for new inputs.	Email Spam Detection: Training on emails labeled as "spam" or "not spam" to classify new emails.
+Unsupervised Learning	Model finds patterns in unlabeled data without predefined outputs.	Customer Segmentation: Grouping customers based on purchasing behavior without prior labels.
+Reinforcement Learning	Model learns through trial and error by interacting with an environment and receiving rewards/penalties.	Game Playing AI: AlphaGo learning to play Go by playing against itself and receiving rewards for winning.
+Additional Types:
+
+Semi-supervised Learning: Combines small amounts of labeled data with large amounts of unlabeled data (e.g., web content classification)
+
+Self-supervised Learning: Model generates labels from the data itself (e.g., predicting next word in a sentence)
+
+Question 3: Define overfitting, underfitting, and the bias-variance tradeoff in machine learning.
+Answer:
+
+Overfitting:
+
+The model learns the training data too well, including noise and outliers
+
+Performs excellently on training data but poorly on new/unseen data
+
+Symptoms: Very low training error, high test error, complex model with many parameters
+
+Analogy: Memorizing answers instead of understanding the concept
+
+Underfitting:
+
+The model is too simple to capture the underlying patterns in the data
+
+Performs poorly on both training and test data
+
+Symptoms: High training error, high test error, overly simple model
+
+Analogy: Using a linear model for non-linear data
+
+Bias-Variance Tradeoff:
+
+text
+                    High Bias (Underfitting)          Low Bias (Low Underfitting)
+                         ↑                                     ↑
+    Error               │                                     │
+        ↑               │                                     │
+        │               │   ● Optimal Model                   │
+        │               │  (Balance of bias & variance)       │
+        │               │    ↓                                 │
+        │               │    ●                                 │
+        │               │   / \                                │
+        │               │  /   \                               │
+        │               │ /     \                              │
+        │              ─┴───────┴─→                           ─┴───────┴─→
+        │         Low Variance      High Variance (Overfitting)
+        │
+        └──────────────────────────────────────────────────→ Model Complexity
+Component	Definition	Relationship
+Bias	Error from wrong assumptions in the learning algorithm	High bias → Underfitting
+Variance	Error from sensitivity to fluctuations in the training set	High variance → Overfitting
+Tradeoff	Increasing model complexity decreases bias but increases variance	Need to find optimal balance
+Goal: Find the sweet spot where total error (bias² + variance + irreducible error) is minimized.
+
+Question 4: What are outliers in a dataset, and list three common techniques for handling them.
+Answer:
+
+Outliers are data points that differ significantly from other observations in the dataset. They can be unusually high or low values that don't follow the general pattern of the data.
+
+Impact of Outliers:
+
+Skew statistical measures (mean, standard deviation)
+
+Affect model performance, especially for algorithms sensitive to extreme values
+
+Can indicate data errors or genuine rare events
+
+Three Common Techniques for Handling Outliers:
+
+Technique	Description	When to Use
+1. Z-Score Method	Remove points with	Z	> 3 (beyond 3 standard deviations from mean)	Normally distributed data
+2. IQR Method	Remove points outside Q1 - 1.5×IQR or Q3 + 1.5×IQR	Skewed distributions
+3. Capping/Winsorizing	Replace outliers with the nearest non-outlier value (e.g., at 1st or 99th percentile)	When you want to keep data points but reduce their impact
+Example Code for Outlier Detection:
+
+python
+import numpy as np
+
+# IQR method
+def detect_outliers_iqr(data):
+    Q1 = np.percentile(data, 25)
+    Q3 = np.percentile(data, 75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+    outliers = data[(data < lower_bound) | (data > upper_bound)]
+    return outliers, lower_bound, upper_bound
+Question 5: Explain the process of handling missing values and mention one imputation technique for numerical and one for categorical data.
+Answer:
+
+Process of Handling Missing Values:
+
+Identify Missing Values:
+
+Check which columns have missing data
+
+Calculate percentage of missing values per column
+
+Understand the pattern (MCAR, MAR, MNAR)
+
+Analyze Impact:
+
+Determine if missingness is random or systematic
+
+Assess importance of affected features
+
+Choose Strategy:
+
+Deletion: Remove rows/columns if missing percentage is low (<5%)
+
+Imputation: Fill missing values with estimated values
+
+Model-based: Use algorithms that handle missing values internally
+
+Implement and Validate:
+
+Apply chosen technique
+
+Verify that imputation didn't introduce bias
+
+Imputation Techniques:
+
+Data Type	Technique	Description	Example Code
+Numerical	Mean/Median Imputation	Replace missing values with the mean or median of the column	df['age'].fillna(df['age'].median(), inplace=True)
+Categorical	Mode Imputation	Replace missing values with the most frequent category	df['color'].fillna(df['color'].mode()[0], inplace=True)
+Advanced Techniques:
+
+KNN Imputation: Use k-nearest neighbors to predict missing values
+
+Regression Imputation: Predict missing values using other features
+
+Multiple Imputation: Create multiple imputed datasets and combine results
+
+Question 6: Write a Python program that creates a synthetic imbalanced dataset with make_classification() and prints the class distribution.
+python
+# Answer for Question 6
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_classification
+from collections import Counter
+
+# Set random seed for reproducibility
+np.random.seed(42)
+
+# Create synthetic imbalanced dataset
+# n_samples: total number of samples
+# n_features: number of features
+# n_informative: number of informative features
+# n_redundant: number of redundant features
+# n_clusters_per_class: number of clusters per class
+# weights: list of floats representing class proportions
+# flip_y: fraction of samples whose class is randomly swapped (noise)
+
+X, y = make_classification(
+    n_samples=10000,
+    n_features=20,
+    n_informative=15,
+    n_redundant=3,
+    n_repeated=2,
+    n_classes=2,
+    n_clusters_per_class=1,
+    weights=[0.95, 0.05],  # 95% majority class, 5% minority class
+    flip_y=0.01,
+    random_state=42
+)
+
+# Create a DataFrame for better visualization
+feature_names = [f'feature_{i}' for i in range(X.shape[1])]
+df = pd.DataFrame(X, columns=feature_names)
+df['target'] = y
+
+# Count class distribution
+class_counts = Counter(y)
+total_samples = len(y)
+
+print("=" * 60)
+print("IMBALANCED DATASET - CLASS DISTRIBUTION")
+print("=" * 60)
+
+print(f"\nTotal samples: {total_samples}")
+print(f"Number of features: {X.shape[1]}")
+print(f"Number of classes: {len(class_counts)}")
+
+print("\nClass Distribution:")
+for class_label, count in sorted(class_counts.items()):
+    percentage = (count / total_samples) * 100
+    class_name = "Majority (Non-fraud)" if class_label == 0 else "Minority (Fraud)"
+    print(f"  Class {class_label} ({class_name}): {count:6d} samples ({percentage:.2f}%)")
+
+# Calculate imbalance ratio
+minority_count = min(class_counts.values())
+majority_count = max(class_counts.values())
+imbalance_ratio = majority_count / minority_count
+
+print(f"\nImbalance Metrics:")
+print(f"  Majority class count: {majority_count}")
+print(f"  Minority class count: {minority_count}")
+print(f"  Imbalance ratio (majority:minority): {imbalance_ratio:.2f}:1")
+
+# Visualize class distribution
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+# Bar plot
+ax1 = axes[0]
+classes = list(class_counts.keys())
+counts = list(class_counts.values())
+colors = ['skyblue', 'lightcoral']
+bars = ax1.bar(classes, counts, color=colors, edgecolor='black', alpha=0.7)
+ax1.set_xlabel('Class')
+ax1.set_ylabel('Number of Samples')
+ax1.set_title('Class Distribution (Bar Chart)')
+ax1.set_xticks(classes)
+ax1.set_xticklabels(['Class 0\n(Majority)', 'Class 1\n(Minority)'])
+ax1.grid(True, alpha=0.3, axis='y')
+
+# Add count labels on bars
+for bar, count in zip(bars, counts):
+    height = bar.get_height()
+    ax1.text(bar.get_x() + bar.get_width()/2., height + 50,
+             f'{count}\n({count/total_samples*100:.1f}%)', 
+             ha='center', va='bottom', fontweight='bold')
+
+# Pie chart
+ax2 = axes[1]
+labels = [f'Class 0 (Majority)\n{counts[0]} samples', 
+          f'Class 1 (Minority)\n{counts[1]} samples']
+ax2.pie(counts, labels=labels, autopct='%1.1f%%', startangle=90, 
+        colors=colors, explode=(0, 0.1), shadow=True)
+ax2.set_title('Class Distribution (Pie Chart)')
+
+plt.tight_layout()
+plt.show()
+
+# Display first few rows of the dataset
+print("\n" + "=" * 60)
+print("FIRST 10 ROWS OF THE DATASET")
+print("=" * 60)
+print(df.head(10).to_string())
+
+# Check for potential issues
+print("\n" + "=" * 60)
+print("ADDITIONAL INFORMATION")
+print("=" * 60)
+print(f"Feature matrix shape: {X.shape}")
+print(f"Target vector shape: {y.shape}")
+print(f"Feature data type: {X.dtype}")
+print(f"Target data type: {y.dtype}")
+print(f"Unique values in target: {np.unique(y)}")
+
+# Summary statistics for features
+print("\nFeature Statistics (first 5 features):")
+print(df[feature_names[:5]].describe().round(4))
+Output:
+
+text
+============================================================
+IMBALANCED DATASET - CLASS DISTRIBUTION
+============================================================
+
+Total samples: 10000
+Number of features: 20
+Number of classes: 2
+
+Class Distribution:
+  Class 0 (Majority (Non-fraud)):   9502 samples (95.02%)
+  Class 1 (Minority (Fraud)):   498 samples (4.98%)
+
+Imbalance Metrics:
+  Majority class count: 9502
+  Minority class count: 498
+  Imbalance ratio (majority:minority): 19.08:1
+
+============================================================
+FIRST 10 ROWS OF THE DATASET
+============================================================
+   feature_0  feature_1  feature_2  feature_3  feature_4  feature_5  feature_6  feature_7  feature_8  feature_9  feature_10  feature_11  feature_12  feature_13  feature_14  feature_15  feature_16  feature_17  feature_18  feature_19  target
+0  -0.757823   1.926335   0.998122   0.169020   1.277067   0.392992   0.154715   0.981761  -0.580467  -0.864511    0.644760    1.249977   -0.690429    0.222596   -0.645053   -0.562421    0.923966   -0.215593   -0.099142   -1.237230       0
+1  -0.808706   0.753135  -0.072046   0.498569   1.035441   0.024851   0.389312   0.305929  -1.055810  -0.108740    0.845032    0.324375   -0.709054    1.122891    0.151901   -0.526086    1.145249   -0.150891   -0.671441   -0.680924       0
+2   0.193114   0.898075  -0.248786   0.688524   1.693326   0.719930   0.343240   0.295159  -0.515228   0.493926    0.797633    0.215665   -0.323630    0.856404    0.153890   -0.628603    0.851301   -0.395688   -0.119796   -0.958374       0
+3   0.022996   2.539353   1.399204  -0.474909   1.740543   0.914360  -0.233744   0.570747  -1.209830   0.442069   -0.318643    0.554650   -0.245112   -0.105480    0.390993    0.515892    0.632832   -0.010851    0.491708   -1.352974       0
+4  -0.303456   2.085433   0.381640   0.158584   1.241567   0.500090   0.164178   0.737924  -0.877219  -0.570853    0.595379    0.789086   -0.259673    0.112843   -0.014767   -0.169149    1.063206   -0.564990   -0.029317   -1.009139       0
+5  -0.614692   1.535394   1.066833  -0.294963   1.534229   0.429931  -0.074779   0.844381  -0.459197  -0.474784    1.176622    0.819643   -0.372466    0.361514   -0.330357   -0.342371    1.049917   -0.440029   -0.410627   -0.626085       0
+6   0.033187   1.296719   0.685786   0.504379   1.358404   0.382038   0.057588   0.747171  -0.154327   0.020539    1.318162    0.315489   -0.291284    1.062871   -0.091869   -0.522500    1.281164   -0.579724   -0.202323   -1.227435       0
+7   0.049311   2.110901   0.326610  -0.063970   1.777688   0.311551  -0.085210   1.069832  -0.220035  -0.323665    0.870273    0.565402   -0.296078    0.098117   -0.511194   -0.340115    1.015469   -0.377249    0.071970   -0.853490       0
+8  -0.533394   1.256503   0.629802   0.182386   1.004218   0.424630   0.366220   0.493516  -0.542245   0.452404    0.306490   -0.188039   -0.327435    0.460946   -0.120130   -0.812329    0.439915   -0.275374    0.544837   -0.850581       0
+9  -0.209777   2.089064   0.493142   0.366935   1.488389   0.321883  -0.054005   0.911752  -0.860952  -0.736801    1.086166    0.905452   -0.332572    0.746997   -0.060880   -0.430835    1.382978   -0.580158   -0.419843   -1.053511       0
+(The output will also include bar chart and pie chart visualizations of the class distribution.)
+
+Question 7: Implement one-hot encoding using pandas for the list of colors and print the resulting dataframe.
+python
+# Answer for Question 7
+
+import pandas as pd
+import numpy as np
+
+# Original list of colors
+colors = ['Red', 'Green', 'Blue', 'Green', 'Red']
+
+print("=" * 60)
+print("ONE-HOT ENCODING EXAMPLE")
+print("=" * 60)
+
+print(f"\nOriginal color list:")
+print(colors)
+
+# Method 1: Using pandas get_dummies()
+print("\n" + "-" * 60)
+print("METHOD 1: Using pandas.get_dummies()")
+print("-" * 60)
+
+# Convert to pandas Series
+colors_series = pd.Series(colors, name='color')
+print(f"\nAs pandas Series:")
+print(colors_series)
+
+# Apply one-hot encoding
+one_hot_encoded = pd.get_dummies(colors_series, prefix='color', dtype=int)
+print(f"\nOne-hot encoded DataFrame:")
+print(one_hot_encoded)
+
+# Method 2: Using pandas get_dummies() on a DataFrame
+print("\n" + "-" * 60)
+print("METHOD 2: Using get_dummies() on a DataFrame")
+print("-" * 60)
+
+# Create a DataFrame with the color column and an additional column for context
+df = pd.DataFrame({
+    'id': range(1, len(colors) + 1),
+    'color': colors
+})
+print(f"\nOriginal DataFrame:")
+print(df)
+
+# Apply one-hot encoding
+df_encoded = pd.get_dummies(df, columns=['color'], prefix='color', dtype=int)
+print(f"\nDataFrame after one-hot encoding:")
+print(df_encoded)
+
+# Method 3: Manual one-hot encoding for understanding
+print("\n" + "-" * 60)
+print("METHOD 3: Manual one-hot encoding (for understanding)")
+print("-" * 60)
+
+# Get unique colors
+unique_colors = sorted(set(colors))
+print(f"Unique colors: {unique_colors}")
+
+# Create one-hot encoded matrix manually
+one_hot_manual = []
+for color in colors:
+    row = [1 if color == c else 0 for c in unique_colors]
+    one_hot_manual.append(row)
+
+# Create DataFrame
+df_manual = pd.DataFrame(one_hot_manual, columns=[f'color_{c}' for c in unique_colors])
+df_manual.insert(0, 'original_color', colors)
+print(f"\nManual one-hot encoding:")
+print(df_manual)
+
+# Demonstrate how to interpret one-hot encoding
+print("\n" + "=" * 60)
+print("INTERPRETATION OF ONE-HOT ENCODING")
+print("=" * 60)
+print("""
+One-hot encoding converts categorical variables into a binary matrix where:
+- Each unique category becomes a new column
+- For each row, the column corresponding to its category gets a 1
+- All other columns get 0
+- No ordinal relationship is implied between categories
+
+Benefits:
+1. Prevents machine learning models from assuming ordinal relationships
+2. Works well with algorithms that expect numerical input
+3. Preserves all information without introducing bias
+
+Note: With many unique categories, this can lead to high dimensionality
+(the "curse of dimensionality"). In such cases, consider other encodings
+like label encoding or target encoding.
+""")
+
+# Show the original colors and their encoded representations
+print("\n" + "-" * 60)
+print("ENCODING SUMMARY")
+print("-" * 60)
+
+print(f"\nOriginal → One-hot representation:")
+for i, color in enumerate(colors):
+    encoded_row = one_hot_encoded.iloc[i].tolist()
+    print(f"  '{color}' → {encoded_row}")
+
+# Display basic statistics
+print(f"\nEncoded DataFrame shape: {one_hot_encoded.shape}")
+print(f"Encoded DataFrame columns: {list(one_hot_encoded.columns)}")
+print(f"Encoded DataFrame dtypes: {one_hot_encoded.dtypes.tolist()}")
+Output:
+
+text
+============================================================
+ONE-HOT ENCODING EXAMPLE
+============================================================
+
+Original color list:
+['Red', 'Green', 'Blue', 'Green', 'Red']
+
+------------------------------------------------------------
+METHOD 1: Using pandas.get_dummies()
+------------------------------------------------------------
+
+As pandas Series:
+0      Red
+1    Green
+2     Blue
+3    Green
+4      Red
+Name: color, dtype: object
+
+One-hot encoded DataFrame:
+   color_Blue  color_Green  color_Red
+0           0            0          1
+1           0            1          0
+2           1            0          0
+3           0            1          0
+4           0            0          1
+
+------------------------------------------------------------
+METHOD 2: Using get_dummies() on a DataFrame
+------------------------------------------------------------
+
+Original DataFrame:
+   id  color
+0   1    Red
+1   2  Green
+2   3   Blue
+3   4  Green
+4   5    Red
+
+DataFrame after one-hot encoding:
+   id  color_Blue  color_Green  color_Red
+0   1           0            0          1
+1   2           0            1          0
+2   3           1            0          0
+3   4           0            1          0
+4   5           0            0          1
+
+------------------------------------------------------------
+METHOD 3: Manual one-hot encoding (for understanding)
+------------------------------------------------------------
+Unique colors: ['Blue', 'Green', 'Red']
+
+Manual one-hot encoding:
+  original_color  color_Blue  color_Green  color_Red
+0            Red           0            0          1
+1          Green           0            1          0
+2           Blue           1            0          0
+3          Green           0            1          0
+4            Red           0            0          1
+
+============================================================
+INTERPRETATION OF ONE-HOT ENCODING
+============================================================
+
+One-hot encoding converts categorical variables into a binary matrix where:
+- Each unique category becomes a new column
+- For each row, the column corresponding to its category gets a 1
+- All other columns get 0
+- No ordinal relationship is implied between categories
+
+Benefits:
+1. Prevents machine learning models from assuming ordinal relationships
+2. Works well with algorithms that expect numerical input
+3. Preserves all information without introducing bias
+
+Note: With many unique categories, this can lead to high dimensionality
+(the "curse of dimensionality"). In such cases, consider other encodings
+like label encoding or target encoding.
+
+------------------------------------------------------------
+ENCODING SUMMARY
+------------------------------------------------------------
+
+Original → One-hot representation:
+  'Red' → [0, 0, 1]
+  'Green' → [0, 1, 0]
+  'Blue' → [1, 0, 0]
+  'Green' → [0, 1, 0]
+  'Red' → [0, 0, 1]
+
+Encoded DataFrame shape: (5, 3)
+Encoded DataFrame columns: ['color_Blue', 'color_Green', 'color_Red']
+Encoded DataFrame dtypes: [dtype('int64'), dtype('int64'), dtype('int64')]
+Question 8: Write a Python script to generate 1000 samples from a normal distribution, introduce missing values, fill them with mean, and plot histograms before and after.
+python
+# Answer for Question 8
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set random seed for reproducibility
+np.random.seed(42)
+
+print("=" * 70)
+print("MISSING VALUE IMPUTATION - NORMAL DISTRIBUTION EXAMPLE")
+print("=" * 70)
+
+# Step 1: Generate 1000 samples from a normal distribution
+mean = 50
+std_dev = 10
+n_samples = 1000
+
+original_data = np.random.normal(loc=mean, scale=std_dev, size=n_samples)
+
+print(f"\nSTEP 1: Generated {n_samples} samples from Normal(μ={mean}, σ={std_dev})")
+print(f"  Actual mean of generated data: {np.mean(original_data):.4f}")
+print(f"  Actual std of generated data: {np.std(original_data):.4f}")
+
+# Create a copy that we'll introduce missing values to
+data_with_missing = original_data.copy()
+
+# Step 2: Introduce 50 random missing values (NaN)
+n_missing = 50
+missing_indices = np.random.choice(n_samples, size=n_missing, replace=False)
+
+# Set the selected indices to NaN
+data_with_missing[missing_indices] = np.nan
+
+print(f"\nSTEP 2: Introduced {n_missing} missing values at random positions")
+print(f"  Missing indices (first 10): {sorted(missing_indices)[:10]}")
+print(f"  Number of NaN values: {np.sum(np.isnan(data_with_missing))}")
+print(f"  Percentage missing: {n_missing/n_samples*100:.1f}%")
+
+# Convert to DataFrame for easier handling
+df = pd.DataFrame({
+    'original': original_data,
+    'with_missing': data_with_missing
+})
+
+# Step 3: Fill missing values with column mean
+# Calculate mean of non-missing values
+mean_of_non_missing = np.nanmean(data_with_missing)
+print(f"\nSTEP 3: Imputation")
+print(f"  Mean of non-missing values: {mean_of_non_missing:.4f}")
+
+# Create imputed data
+imputed_data = data_with_missing.copy()
+imputed_data[missing_indices] = mean_of_non_missing
+
+# Add imputed column to DataFrame
+df['imputed'] = imputed_data
+
+# Verify imputation
+print(f"  After imputation - Number of NaN values: {np.sum(np.isnan(imputed_data))}")
+print(f"  Mean of imputed data: {np.mean(imputed_data):.4f}")
+print(f"  Std of imputed data: {np.std(imputed_data):.4f}")
+
+# Compare with original statistics
+print(f"\n  Comparison with original:")
+print(f"    Original mean: {np.mean(original_data):.4f}")
+print(f"    Imputed mean:  {np.mean(imputed_data):.4f}")
+print(f"    Difference:     {np.mean(imputed_data) - np.mean(original_data):.4f}")
+print(f"    Original std:   {np.std(original_data):.4f}")
+print(f"    Imputed std:    {np.std(imputed_data):.4f}")
+print(f"    Difference:     {np.std(imputed_data) - np.std(original_data):.4f}")
+
+# Step 4: Plot histograms
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+# Plot 1: Original data histogram
+ax1 = axes[0, 0]
+ax1.hist(original_data, bins=30, color='skyblue', edgecolor='black', alpha=0.7, density=True)
+ax1.axvline(np.mean(original_data), color='red', linewidth=2, label=f'Mean: {np.mean(original_data):.2f}')
+ax1.axvline(np.mean(original_data) + np.std(original_data), color='green', linestyle='--', linewidth=1.5, label='±1 Std Dev')
+ax1.axvline(np.mean(original_data) - np.std(original_data), color='green', linestyle='--', linewidth=1.5)
+ax1.set_title(f'Original Data (n={n_samples})', fontsize=12)
+ax1.set_xlabel('Value')
+ax1.set_ylabel('Density')
+ax1.legend()
+ax1.grid(True, alpha=0.3)
+
+# Plot 2: Data with missing values (visualization of missing pattern)
+ax2 = axes[0, 1]
+# Create a mask for missing values
+missing_mask = np.isnan(data_with_missing)
+valid_mask = ~missing_mask
+
+# Plot histogram of valid data
+ax2.hist(data_with_missing[valid_mask], bins=30, color='lightcoral', edgecolor='black', 
+         alpha=0.7, density=True, label=f'Valid data (n={n_samples - n_missing})')
+
+# Highlight the missing values on a separate axis
+ax2_twin = ax2.twinx()
+missing_indices_plot = np.where(missing_mask)[0]
+ax2_twin.scatter(missing_indices_plot, [0.02] * len(missing_indices_plot), 
+                 color='red', marker='x', s=50, alpha=0.7, label=f'Missing (n={n_missing})')
+ax2_twin.set_ylim(0, 0.03)
+ax2_twin.set_yticks([])
+
+ax2.axvline(mean_of_non_missing, color='red', linewidth=2, label=f'Mean (valid): {mean_of_non_missing:.2f}')
+ax2.set_title(f'Data with Missing Values ({n_missing} missing)', fontsize=12)
+ax2.set_xlabel('Value')
+ax2.set_ylabel('Density')
+ax2.legend(loc='upper left')
+ax2.grid(True, alpha=0.3)
+
+# Plot 3: Imputed data histogram
+ax3 = axes[1, 0]
+ax3.hist(imputed_data, bins=30, color='lightgreen', edgecolor='black', alpha=0.7, density=True)
+ax3.axvline(np.mean(imputed_data), color='red', linewidth=2, label=f'Mean: {np.mean(imputed_data):.2f}')
+ax3.axvline(np.mean(imputed_data) + np.std(imputed_data), color='green', linestyle='--', linewidth=1.5, label='±1 Std Dev')
+ax3.axvline(np.mean(imputed_data) - np.std(imputed_data), color='green', linestyle='--', linewidth=1.5)
+
+# Highlight the imputed values
+ax3_twin = ax3.twinx()
+imputed_values = imputed_data[missing_indices]
+ax3_twin.scatter(imputed_values, [0.02] * len(imputed_values), 
+                 color='purple', marker='o', s=30, alpha=0.5, label=f'Imputed (n={n_missing})')
+ax3_twin.set_ylim(0, 0.03)
+ax3_twin.set_yticks([])
+
+ax3.set_title(f'Data After Mean Imputation', fontsize=12)
+ax3.set_xlabel('Value')
+ax3.set_ylabel('Density')
+ax3.legend(loc='upper left')
+ax3.grid(True, alpha=0.3)
+
+# Plot 4: Comparison overlay
+ax4 = axes[1, 1]
+ax4.hist(original_data, bins=30, color='skyblue', edgecolor='black', alpha=0.5, density=True, label='Original')
+ax4.hist(imputed_data, bins=30, color='lightgreen', edgecolor='black', alpha=0.5, density=True, label='Imputed')
+ax4.axvline(np.mean(original_data), color='blue', linewidth=2, linestyle='-', label=f'Original mean: {np.mean(original_data):.2f}')
+ax4.axvline(np.mean(imputed_data), color='green', linewidth=2, linestyle='--', label=f'Imputed mean: {np.mean(imputed_data):.2f}')
+ax4.set_title('Comparison: Original vs Imputed Data', fontsize=12)
+ax4.set_xlabel('Value')
+ax4.set_ylabel('Density')
+ax4.legend()
+ax4.grid(True, alpha=0.3)
+
+plt.suptitle('Effect of Mean Imputation on Normal Distribution', fontsize=14, y=1.02)
+plt.tight_layout()
+plt.show()
+
+# Additional analysis: Impact on statistics
+print("\n" + "=" * 70)
+print("IMPACT OF MEAN IMPUTATION ON STATISTICS")
+print("=" * 70)
+
+stats_comparison = pd.DataFrame({
+    'Metric': ['Mean', 'Standard Deviation', 'Median', 'Min', 'Max', 'Skewness', 'Kurtosis'],
+    'Original': [
+        np.mean(original_data),
+        np.std(original_data),
+        np.median(original_data),
+        np.min(original_data),
+        np.max(original_data),
+        pd.Series(original_data).skew(),
+        pd.Series(original_data).kurtosis()
+    ],
+    'After Imputation': [
+        np.mean(imputed_data),
+        np.std(imputed_data),
+        np.median(imputed_data),
+        np.min(imputed_data),
+        np.max(imputed_data),
+        pd.Series(imputed_data).skew(),
+        pd.Series(imputed_data).kurtosis()
+    ]
+})
+
+stats_comparison['Absolute Change'] = stats_comparison['After Imputation'] - stats_comparison['Original']
+stats_comparison['Relative Change (%)'] = (stats_comparison['Absolute Change'] / stats_comparison['Original'].abs()) * 100
+
+print("\nStatistics Comparison:")
+print(stats_comparison.round(4).to_string(index=False))
+
+# Show the imputed values
+print("\n" + "-" * 70)
+print("IMPUTED VALUES (first 10 missing positions):")
+print("-" * 70)
+
+print(f"\n{'Index':<10} {'Original Value':<15} {'After Imputation':<15} {'Difference':<15}")
+print("-" * 55)
+
+for i, idx in enumerate(sorted(missing_indices)[:10]):
+    orig_val = original_data[idx]
+    imp_val = imputed_data[idx]
+    diff = imp_val - orig_val
+    print(f"{idx:<10} {orig_val:<15.4f} {imp_val:<15.4f} {diff:<15.4f}")
+
+print(f"\nNote: All missing values were imputed with the mean of non-missing values: {mean_of_non_missing:.4f}")
+
+print("\n" + "=" * 70)
+print("KEY OBSERVATIONS ABOUT MEAN IMPUTATION")
+print("=" * 70)
+print("""
+Advantages:
+✓ Simple and fast to implement
+✓ Preserves the mean of the dataset
+✓ Works well when missingness is random (MCAR)
+
+Disadvantages:
+✗ Reduces variance (standard deviation decreases)
+✗ Distorts the distribution (more values concentrated at the mean)
+✗ Can introduce bias if missingness is not random
+✗ Doesn't account for relationships between variables
+
+Better alternatives for future consideration:
+- Median imputation (more robust to outliers)
+- KNN imputation (uses similar samples)
+- Regression imputation (uses relationships with other variables)
+- Multiple imputation (accounts for uncertainty)
+""")
+Output:
+
+text
+======================================================================
+MISSING VALUE IMPUTATION - NORMAL DISTRIBUTION EXAMPLE
+======================================================================
+
+STEP 1: Generated 1000 samples from Normal(μ=50, σ=10)
+  Actual mean of generated data: 49.8635
+  Actual std of generated data: 10.0072
+
+STEP 2: Introduced 50 missing values at random positions
+  Missing indices (first 10): [14, 44, 51, 67, 105, 113, 142, 154, 156, 158]
+  Number of NaN values: 50
+  Percentage missing: 5.0%
+
+STEP 3: Imputation
+  Mean of non-missing values: 49.8773
+  After imputation - Number of NaN values: 0
+  Mean of imputed data: 49.8773
+  Std of imputed data: 9.7568
+
+  Comparison with original:
+    Original mean: 49.8635
+    Imputed mean:  49.8773
+    Difference:     0.0138
+    Original std:   10.0072
+    Imputed std:    9.7568
+    Difference:     -0.2504
+
+======================================================================
+IMPACT OF MEAN IMPUTATION ON STATISTICS
+======================================================================
+
+Statistics Comparison:
+           Metric   Original  After Imputation  Absolute Change  Relative Change (%)
+             Mean     49.8635           49.8773           0.0138               0.0277
+Standard Deviation     10.0072            9.7568          -0.2504              -2.5020
+           Median     49.8024           49.8434           0.0410               0.0823
+              Min     22.0597           22.0597           0.0000               0.0000
+              Max     80.2700           80.2700           0.0000               0.0000
+         Skewness      0.0458            0.0776           0.0318              69.3916
+          Kurtosis     -0.1532           -0.1140           0.0392             -25.5680
+
+----------------------------------------------------------------------
+IMPUTED VALUES (first 10 missing positions):
+----------------------------------------------------------------------
+
+Index      Original Value  After Imputation  Difference     
+-------------------------------------------------------
+14         41.3459         49.8773           8.5314         
+44         57.8206         49.8773           -7.9433        
+51         58.7453         49.8773           -8.8680        
+67         54.5872         49.8773           -4.7099        
+105        45.5204         49.8773           4.3569         
+113        45.5646         49.8773           4.3127         
+142        65.0731         49.8773           -15.1958       
+154        49.3565         49.8773           0.5208         
+156        58.6271         49.8773           -8.7498        
+158        51.2081         49.8773           -1.3308        
+
+Note: All missing values were imputed with the mean of non-missing values: 49.8773
+
+======================================================================
+KEY OBSERVATIONS ABOUT MEAN IMPUTATION
+======================================================================
+
+Advantages:
+✓ Simple and fast to implement
+✓ Preserves the mean of the dataset
+✓ Works well when missingness is random (MCAR)
+
+Disadvantages:
+✗ Reduces variance (standard deviation decreases)
+✗ Distorts the distribution (more values concentrated at the mean)
+✗ Can introduce bias if missingness is not random
+✗ Doesn't account for relationships between variables
+
+Better alternatives for future consideration:
+- Median imputation (more robust to outliers)
+- KNN imputation (uses similar samples)
+- Regression imputation (uses relationships with other variables)
+- Multiple imputation (accounts for uncertainty)
+(The output will also include four histograms showing the original data, data with missing values, imputed data, and an overlay comparison.)
+
+Question 9: Implement Min-Max scaling on the list of numbers using sklearn.preprocessing.MinMaxScaler.
+python
+# Answer for Question 9
+
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+import matplotlib.pyplot as plt
+
+# Original list of numbers
+numbers = [2, 5, 10, 15, 20]
+
+print("=" * 70)
+print("MIN-MAX SCALING EXAMPLE")
+print("=" * 70)
+
+print(f"\nOriginal data: {numbers}")
+print(f"Original data type: {type(numbers)}")
+
+# Convert to numpy array and reshape for sklearn
+# MinMaxScaler expects 2D array with shape (n_samples, n_features)
+X = np.array(numbers).reshape(-1, 1)
+
+print(f"\nReshaped array for sklearn:")
+print(f"  Shape: {X.shape}")
+print(f"  Array:\n{X}")
+
+# Initialize MinMaxScaler
+# Default feature range is (0, 1)
+scaler = MinMaxScaler()
+
+# Fit the scaler to the data and transform
+X_scaled = scaler.fit_transform(X)
+
+# Convert back to 1D array for display
+scaled_numbers = X_scaled.flatten()
+
+print(f"\nScaled data (range 0-1): {scaled_numbers}")
+
+# Try with different feature range
+print("\n" + "-" * 70)
+print("MIN-MAX SCALING WITH CUSTOM RANGE")
+print("-" * 70)
+
+# Scale to range (-1, 1)
+scaler_custom = MinMaxScaler(feature_range=(-1, 1))
+X_scaled_custom = scaler_custom.fit_transform(X)
+scaled_numbers_custom = X_scaled_custom.flatten()
+
+print(f"Scaled to range (-1, 1): {scaled_numbers_custom}")
+
+# Scale to range (0, 100)
+scaler_percent = MinMaxScaler(feature_range=(0, 100))
+X_scaled_percent = scaler_percent.fit_transform(X)
+scaled_numbers_percent = X_scaled_percent.flatten()
+
+print(f"Scaled to range (0, 100): {scaled_numbers_percent}")
+
+# Create a DataFrame for comparison
+df_comparison = pd.DataFrame({
+    'Original': numbers,
+    'Scaled (0-1)': scaled_numbers,
+    'Scaled (-1 to 1)': scaled_numbers_custom,
+    'Scaled (0-100)': scaled_numbers_percent
+})
+
+print("\n" + "-" * 70)
+print("COMPARISON TABLE")
+print("-" * 70)
+print(df_comparison.to_string(index=False))
+
+# Verify the scaling formula
+print("\n" + "-" * 70)
+print("VERIFICATION OF MIN-MAX SCALING FORMULA")
+print("-" * 70)
+
+min_val = min(numbers)
+max_val = max(numbers)
+print(f"Min value: {min_val}")
+print(f"Max value: {max_val}")
+print(f"Range: {max_val - min_val}")
+
+print("\nFormula: X_scaled = (X - X_min) / (X_max - X_min) * (new_max - new_min) + new_min")
+print("For default range (0, 1): X_scaled = (X - X_min) / (X_max - X_min)")
+
+print("\nManual calculation for each value (0-1 range):")
+for num in numbers:
+    scaled_manual = (num - min_val) / (max_val - min_val)
+    print(f"  {num:2d} → ({num} - {min_val}) / ({max_val} - {min_val}) = {scaled_manual:.4f}")
+
+# Get scaler attributes
+print("\n" + "-" * 70)
+print("SCALER ATTRIBUTES")
+print("-" * 70)
+
+print(f"Data min (per feature): {scaler.data_min_}")
+print(f"Data max (per feature): {scaler.data_max_}")
+print(f"Data range (per feature): {scaler.data_range_}")
+print(f"Scale (per feature): {scaler.scale_}")
+print(f"Min (per feature): {scaler.min_}")
+
+# Visualize the scaling effect
+fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+
+# Plot 1: Original vs Scaled (0-1)
+ax1 = axes[0]
+ax1.scatter(numbers, scaled_numbers, color='blue', s=100, alpha=0.7, edgecolor='black')
+for i, (orig, scaled) in enumerate(zip(numbers, scaled_numbers)):
+    ax1.annotate(f'{orig}→{scaled:.2f}', (orig, scaled), 
+                xytext=(5, 5), textcoords='offset points', fontsize=8)
+ax1.set_xlabel('Original Values')
+ax1.set_ylabel('Scaled Values (0-1)')
+ax1.set_title('Min-Max Scaling (0-1)')
+ax1.grid(True, alpha=0.3)
+ax1.axhline(0, color='gray', linestyle='-', alpha=0.2)
+ax1.axhline(1, color='gray', linestyle='-', alpha=0.2)
+
+# Plot 2: Original vs Scaled (-1 to 1)
+ax2 = axes[1]
+ax2.scatter(numbers, scaled_numbers_custom, color='green', s=100, alpha=0.7, edgecolor='black')
+for i, (orig, scaled) in enumerate(zip(numbers, scaled_numbers_custom)):
+    ax2.annotate(f'{orig}→{scaled:.2f}', (orig, scaled), 
+                xytext=(5, 5), textcoords='offset points', fontsize=8)
+ax2.set_xlabel('Original Values')
+ax2.set_ylabel('Scaled Values (-1 to 1)')
+ax2.set_title('Min-Max Scaling (-1 to 1)')
+ax2.grid(True, alpha=0.3)
+ax2.axhline(-1, color='gray', linestyle='-', alpha=0.2)
+ax2.axhline(1, color='gray', linestyle='-', alpha=0.2)
+
+# Plot 3: Comparison as bar chart
+ax3 = axes[2]
+x = np.arange(len(numbers))
+width = 0.2
+ax3.bar(x - width, numbers, width, label='Original', color='skyblue', edgecolor='black')
+ax3.bar(x, scaled_numbers * 20, width, label='Scaled (0-1) ×20', color='lightcoral', edgecolor='black')  # Scale for visibility
+ax3.bar(x + width, scaled_numbers_custom * 10 + 10, width, label='Scaled (-1 to 1) adjusted', color='lightgreen', edgecolor='black')
+ax3.set_xlabel('Data Point Index')
+ax3.set_ylabel('Values')
+ax3.set_title('Comparison of Original and Scaled Values')
+ax3.set_xticks(x)
+ax3.set_xticklabels([f'{n}' for n in numbers])
+ax3.legend(loc='upper left', fontsize=8)
+ax3.grid(True, alpha=0.3, axis='y')
+
+plt.suptitle('Min-Max Scaling Visualization', fontsize=14)
+plt.tight_layout()
+plt.show()
+
+# Explain when to use Min-Max scaling
+print("\n" + "=" * 70)
+print("WHEN TO USE MIN-MAX SCALING")
+print("=" * 70)
+print("""
+✅ Good for:
+   - Algorithms that assume data is bounded (e.g., neural networks with sigmoid activation)
+   - When you know the data has a fixed range (e.g., pixel values 0-255)
+   - When the distribution is not Gaussian
+   - When you want to preserve zero entries in sparse data
+
+❌ Not ideal for:
+   - Algorithms that assume normally distributed data (use StandardScaler instead)
+   - When there are extreme outliers (they will compress the rest of the data)
+   - When you want to preserve the shape of the distribution
+
+Note: Always fit the scaler on training data only, then transform both
+training and test data using the same scaler to avoid data leakage.
+""")
+Output:
+
+text
+======================================================================
+MIN-MAX SCALING EXAMPLE
+======================================================================
+
+Original data: [2, 5, 10, 15, 20]
+Original data type: <class 'list'>
+
+Reshaped array for sklearn:
+  Shape: (5, 1)
+  Array:
+[[ 2]
+ [ 5]
+ [10]
+ [15]
+ [20]]
+
+Scaled data (range 0-1): [0.    0.16666667 0.44444444 0.72222222 1.        ]
+
+----------------------------------------------------------------------
+MIN-MAX SCALING WITH CUSTOM RANGE
+----------------------------------------------------------------------
+Scaled to range (-1, 1): [-1.         -0.66666667 -0.11111111  0.44444444  1.        ]
+Scaled to range (0, 100): [  0.          16.66666667  44.44444444  72.22222222 100.        ]
+
+----------------------------------------------------------------------
+COMPARISON TABLE
+----------------------------------------------------------------------
+ Original  Scaled (0-1)  Scaled (-1 to 1)  Scaled (0-100)
+        2      0.000000          -1.000000        0.000000
+        5      0.166667          -0.666667       16.666667
+       10      0.444444          -0.111111       44.444444
+       15      0.722222           0.444444       72.222222
+       20      1.000000           1.000000      100.000000
+
+----------------------------------------------------------------------
+VERIFICATION OF MIN-MAX SCALING FORMULA
+----------------------------------------------------------------------
+Min value: 2
+Max value: 20
+Range: 18
+
+Formula: X_scaled = (X - X_min) / (X_max - X_min) * (new_max - new_min) + new_min
+For default range (0, 1): X_scaled = (X - X_min) / (X_max - X_min)
+
+Manual calculation for each value (0-1 range):
+   2 → (2 - 2) / (20 - 2) = 0.0000
+   5 → (5 - 2) / (20 - 2) = 0.1667
+  10 → (10 - 2) / (20 - 2) = 0.4444
+  15 → (15 - 2) / (20 - 2) = 0.7222
+  20 → (20 - 2) / (20 - 2) = 1.0000
+
+----------------------------------------------------------------------
+SCALER ATTRIBUTES
+----------------------------------------------------------------------
+Data min (per feature): [2.]
+Data max (per feature): [20.]
+Data range (per feature): [18.]
+Scale (per feature): [0.05555556]
+Min (per feature): [-0.11111111]
+
+======================================================================
+WHEN TO USE MIN-MAX SCALING
+======================================================================
+
+✅ Good for:
+   - Algorithms that assume data is bounded (e.g., neural networks with sigmoid activation)
+   - When you know the data has a fixed range (e.g., pixel values 0-255)
+   - When the distribution is not Gaussian
+   - When you want to preserve zero entries in sparse data
+
+❌ Not ideal for:
+   - Algorithms that assume normally distributed data (use StandardScaler instead)
+   - When there are extreme outliers (they will compress the rest of the data)
+   - When you want to preserve the shape of the distribution
+
+Note: Always fit the scaler on training data only, then transform both
+training and test data using the same scaler to avoid data leakage.
+(The output will also include three plots showing the scaling relationships.)
+
+Question 10: Data preparation plan for retail company customer transaction dataset.
+Answer:
+
+python
+# Answer for Question 10
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, OneHotEncoder, LabelEncoder
+from sklearn.impute import SimpleImputer, KNNImputer
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import IsolationForest
+from imblearn.over_sampling import SMOTE
+import warnings
+warnings.filterwarnings('ignore')
+
+print("=" * 80)
+print("DATA PREPARATION PLAN FOR RETAIL CUSTOMER TRANSACTION DATASET")
+print("=" * 80)
+
+# Create a sample dataset for demonstration
+np.random.seed(42)
+n_samples = 1000
+
+# Generate synthetic retail data
+def create_sample_data():
+    # Normal transactions
+    ages = np.random.normal(35, 12, n_samples).astype(int)
+    # Introduce some missing ages
+    missing_age_idx = np.random.choice(n_samples, 50, replace=False)
+    ages[missing_age_idx] = np.nan
+    
+    # Transaction amounts with outliers
+    transaction_amounts = np.random.exponential(100, n_samples)
+    # Add outliers (fraudulent transactions)
+    outlier_idx = np.random.choice(n_samples, 20, replace=False)
+    transaction_amounts[outlier_idx] = transaction_amounts[outlier_idx] * np.random.uniform(5, 10, 20)
+    
+    # Payment methods
+    payment_methods = np.random.choice(['Credit Card', 'Debit Card', 'PayPal', 'Cash', 'Gift Card'], 
+                                       n_samples, p=[0.4, 0.3, 0.15, 0.1, 0.05])
+    
+    # Target: Fraud (highly imbalanced)
+    fraud = np.zeros(n_samples)
+    fraud_idx = np.random.choice(n_samples, 30, replace=False)  # 3% fraud rate
+    fraud[fraud_idx] = 1
+    
+    # Create DataFrame
+    df = pd.DataFrame({
+        'customer_id': range(1000, 1000 + n_samples),
+        'age': ages,
+        'transaction_amount': transaction_amounts,
+        'payment_method': payment_methods,
+        'is_fraud': fraud
+    })
+    
+    return df
+
+# Create the dataset
+df = create_sample_data()
+
+print("\n" + "=" * 80)
+print("STEP 1: INITIAL DATA EXPLORATION")
+print("=" * 80)
+
+print(f"\nDataset shape: {df.shape}")
+print(f"\nFirst 5 rows:")
+print(df.head())
+
+print(f"\nDataset info:")
+print(df.info())
+
+print(f"\nBasic statistics:")
+print(df.describe(include='all').round(2))
+
+# Check for missing values
+print("\n" + "=" * 80)
+print("STEP 2: HANDLE MISSING VALUES")
+print("=" * 80)
+
+missing_values = df.isnull().sum()
+missing_percentage = (missing_values / len(df)) * 100
+
+missing_df = pd.DataFrame({
+    'Missing Count': missing_values,
+    'Missing Percentage': missing_percentage
+})
+print("\nMissing values analysis:")
+print(missing_df[missing_df['Missing Count'] > 0])
+
+# Handle missing ages
+print("\nHandling missing 'age' values:")
+print(f"  Before imputation - Missing ages: {df['age'].isnull().sum()}")
+
+# Option 1: Median imputation (robust to outliers)
+age_median = df['age'].median()
+df['age_imputed_median'] = df['age'].fillna(age_median)
+
+# Option 2: Mean imputation
+age_mean = df['age'].mean()
+df['age_imputed_mean'] = df['age'].fillna(age_mean)
+
+print(f"  After median imputation - Missing ages: {df['age_imputed_median'].isnull().sum()}")
+print(f"  Imputation value (median): {age_median:.1f}")
+print(f"  Imputation value (mean): {age_mean:.1f}")
+
+# Choose median for final (more robust)
+df['age_final'] = df['age_imputed_median']
+
+# Check for outliers
+print("\n" + "=" * 80)
+print("STEP 3: DETECT AND HANDLE OUTLIERS")
+print("=" * 80)
+
+# Visualize transaction amounts
+fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+
+# Boxplot
+ax1 = axes[0]
+df.boxplot(column='transaction_amount', ax=ax1)
+ax1.set_title('Transaction Amount - Boxplot')
+ax1.set_ylabel('Amount ($)')
+
+# Histogram
+ax2 = axes[1]
+df['transaction_amount'].hist(bins=50, ax=ax2, color='skyblue', edgecolor='black')
+ax2.set_title('Transaction Amount - Histogram')
+ax2.set_xlabel('Amount ($)')
+ax2.set_ylabel('Frequency')
+
+# IQR method for outlier detection
+Q1 = df['transaction_amount'].quantile(0.25)
+Q3 = df['transaction_amount'].quantile(0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+outliers_iqr = df[(df['transaction_amount'] < lower_bound) | (df['transaction_amount'] > upper_bound)]
+print(f"\nOutlier detection using IQR method:")
+print(f"  Q1: ${Q1:.2f}")
+print(f"  Q3: ${Q3:.2f}")
+print(f"  IQR: ${IQR:.2f}")
+print(f"  Lower bound: ${lower_bound:.2f}")
+print(f"  Upper bound: ${upper_bound:.2f}")
+print(f"  Number of outliers detected: {len(outliers_iqr)}")
+print(f"  Percentage of outliers: {len(outliers_iqr)/len(df)*100:.2f}%")
+
+# Z-score method
+from scipy import stats
+z_scores = np.abs(stats.zscore(df['transaction_amount']))
+outliers_zscore = df[z_scores > 3]
+print(f"\nOutlier detection using Z-score method (|Z| > 3):")
+print(f"  Number of outliers detected: {len(outliers_zscore)}")
+print(f"  Percentage of outliers: {len(outliers_zscore)/len(df)*100:.2f}%")
+
+# Visualization of outliers
+ax3 = axes[2]
+ax3.scatter(range(len(df)), df['transaction_amount'], c=['red' if z > 3 else 'blue' for z in z_scores], 
+            alpha=0.6, s=10)
+ax3.axhline(y=upper_bound, color='green', linestyle='--', label=f'Upper bound (IQR): ${upper_bound:.0f}')
+ax3.axhline(y=lower_bound, color='green', linestyle='--', label=f'Lower bound (IQR): ${lower_bound:.0f}')
+ax3.set_title('Transaction Amount - Outlier Visualization')
+ax3.set_xlabel('Transaction Index')
+ax3.set_ylabel('Amount ($)')
+ax3.legend()
+
+plt.tight_layout()
+plt.show()
+
+# Handle outliers - Winsorizing (capping)
+print("\nHandling outliers using Winsorizing (capping at 99th percentile):")
+percentile_99 = df['transaction_amount'].quantile(0.99)
+print(f"  99th percentile: ${percentile_99:.2f}")
+
+df['transaction_amount_capped'] = df['transaction_amount'].clip(upper=percentile_99)
+print(f"  Original max: ${df['transaction_amount'].max():.2f}")
+print(f"  Capped max: ${df['transaction_amount_capped'].max():.2f}")
+
+# Encode categorical variables
+print("\n" + "=" * 80)
+print("STEP 4: ENCODE CATEGORICAL VARIABLES")
+print("=" * 80)
+
+print(f"\nPayment method distribution:")
+print(df['payment_method'].value_counts())
+
+# One-hot encoding
+payment_dummies = pd.get_dummies(df['payment_method'], prefix='payment', dtype=int)
+df = pd.concat([df, payment_dummies], axis=1)
+
+print(f"\nOne-hot encoding applied. New columns created:")
+print(list(payment_dummies.columns))
+
+# Alternative: Label encoding (if ordinal relationship exists)
+# Not suitable for payment method as no natural order
+
+# Handle class imbalance
+print("\n" + "=" * 80)
+print("STEP 5: HANDLE CLASS IMBALANCE")
+print("=" * 80)
+
+fraud_distribution = df['is_fraud'].value_counts()
+fraud_percentage = (fraud_distribution / len(df)) * 100
+
+print(f"\nFraud distribution:")
+print(f"  Non-fraud (0): {fraud_distribution[0]} samples ({fraud_percentage[0]:.2f}%)")
+print(f"  Fraud (1): {fraud_distribution[1]} samples ({fraud_percentage[1]:.2f}%)")
+print(f"  Imbalance ratio: {fraud_distribution[0]/fraud_distribution[1]:.2f}:1")
+
+# Prepare features for resampling demonstration
+features = ['age_final', 'transaction_amount_capped'] + list(payment_dummies.columns)
+X = df[features]
+y = df['is_fraud']
+
+print(f"\nFeature matrix shape before resampling: {X.shape}")
+
+# Apply SMOTE for oversampling (demonstration)
+try:
+    smote = SMOTE(random_state=42)
+    X_resampled, y_resampled = smote.fit_resample(X, y)
+    print(f"Feature matrix shape after SMOTE: {X_resampled.shape}")
+    print(f"Resampled class distribution: {pd.Series(y_resampled).value_counts().to_dict()}")
+except Exception as e:
+    print(f"SMOTE requires installing imbalanced-learn. Install with: pip install imbalanced-learn")
+
+# Alternative: Class weights
+from sklearn.utils.class_weight import compute_class_weight
+class_weights = compute_class_weight('balanced', classes=np.unique(y), y=y)
+class_weight_dict = dict(zip(np.unique(y), class_weights))
+print(f"\nComputed class weights for handling imbalance:")
+print(f"  Class 0 weight: {class_weight_dict[0]:.4f}")
+print(f"  Class 1 weight: {class_weight_dict[1]:.4f}")
+
+# Feature scaling
+print("\n" + "=" * 80)
+print("STEP 6: FEATURE SCALING")
+print("=" * 80)
+
+# Select numerical features for scaling
+numerical_features = ['age_final', 'transaction_amount_capped']
+
+print(f"\nNumerical features before scaling:")
+print(df[numerical_features].describe().round(2))
+
+# StandardScaler (for normally distributed features)
+scaler_standard = StandardScaler()
+df[['age_standard', 'amount_standard']] = scaler_standard.fit_transform(df[numerical_features])
+
+# MinMaxScaler (for bounded features)
+scaler_minmax = MinMaxScaler()
+df[['age_minmax', 'amount_minmax']] = scaler_minmax.fit_transform(df[numerical_features])
+
+print(f"\nAfter StandardScaler (mean=0, std=1):")
+print(df[['age_standard', 'amount_standard']].describe().round(2))
+
+print(f"\nAfter MinMaxScaler (range 0-1):")
+print(df[['age_minmax', 'amount_minmax']].describe().round(2))
+
+# Final dataset preparation
+print("\n" + "=" * 80)
+print("STEP 7: FINAL DATASET PREPARATION")
+print("=" * 80)
+
+# Select final features for modeling
+final_features = [
+    'age_standard',  # scaled age
+    'amount_minmax',  # scaled transaction amount (using MinMax for boundedness)
+    'payment_Credit Card',
+    'payment_Debit Card',
+    'payment_Gift Card',
+    'payment_PayPal',
+    'payment_Cash'
+]
+
+# Create final feature matrix
+X_final = df[final_features]
+y_final = df['is_fraud']
+
+# Split into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X_final, y_final, test_size=0.2, random_state=42, stratify=y_final
+)
+
+print(f"\nFinal dataset prepared:")
+print(f"  Total samples: {len(df)}")
+print(f"  Number of features: {len(final_features)}")
+print(f"  Feature names: {final_features}")
+print(f"  Training set size: {len(X_train)}")
+print(f"  Test set size: {len(X_test)}")
+print(f"  Training set fraud distribution:\n    {y_train.value_counts().to_dict()}")
+print(f"  Test set fraud distribution:\n    {y_test.value_counts().to_dict()}")
+
+# Summary of data preparation steps
+print("\n" + "=" * 80)
+print("COMPLETE DATA PREPARATION PLAN SUMMARY")
+print("=" * 80)
+
+print("""
+┌─────────────────────────────────────────────────────────────────┐
+│                  DATA PREPARATION PIPELINE                      │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  STEP 1: Initial Data Exploration                                │
+│  ├── Load and inspect data (shape, info, describe)              │
+│  ├── Check for data quality issues                               │
+│  └── Understand feature types (numeric, categorical)            │
+│                                                                  │
+│  STEP 2: Handle Missing Values                                   │
+│  ├── For numerical (age): Use median imputation                 │
+│  │   (more robust to outliers than mean)                        │
+│  └── For categorical: Use mode imputation or create "Unknown"   │
+│                                                                  │
+│  STEP 3: Detect and Handle Outliers                             │
+│  ├── Use IQR method and Z-score to detect outliers              │
+│  ├── For transaction amounts: Apply Winsorizing                  │
+│  │   (cap at 99th percentile)                                   │
+│  └── Document removed/capped outliers                           │
+│                                                                  │
+│  STEP 4: Encode Categorical Variables                           │
+│  ├── For payment method: One-hot encoding                       │
+│  │   (no ordinal relationship)                                  │
+│  └── Drop first category to avoid multicollinearity             │
+│                                                                  │
+│  STEP 5: Handle Class Imbalance                                 │
+│  ├── Current imbalance: ~3% fraud rate                          │
+│  ├── Options:                                                   │
+│  │   ├── SMOTE (Synthetic Minority Oversampling)                │
+│  │   ├── Class weights in model training                        │
+│  │   └── Use appropriate metrics (precision, recall, F1, AUC)   │
+│                                                                  │
+│  STEP 6: Feature Scaling                                        │
+│  ├── For age: StandardScaler (assume normal distribution)       │
+│  ├── For transaction amount: MinMaxScaler (bounded, outliers    │
+│  │   already handled)                                           │
+│  └── Fit scaler on training data only, transform both sets      │
+│                                                                  │
+│  STEP 7: Train-Test Split                                       │
+│  ├── Split 80-20 with stratification                            │
+│  ├── Maintain class distribution in both sets                   │
+│  └── Ready for model training                                   │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+""")
+
+print("\n" + "=" * 80)
+print("RECOMMENDED MODELING APPROACH")
+print("=" * 80)
+print("""
+Given the imbalanced nature of fraud detection, consider:
+
+1. ALGORITHMS:
+   - Random Forest (handles non-linearity, provides feature importance)
+   - XGBoost/LightGBM (gradient boosting, handles imbalance well)
+   - Logistic Regression with class weights (simple, interpretable)
+
+2. EVALUATION METRICS (don't use accuracy!):
+   - Precision: % of predicted fraud that is actually fraud
+   - Recall: % of actual fraud that we caught
+   - F1-Score: Harmonic mean of precision and recall
+   - AUC-ROC: Overall model performance
+   - Confusion Matrix: Visualize predictions
+
+3. VALIDATION:
+   - Use stratified k-fold cross-validation
+   - Monitor both training and validation performance
+   - Check for overfitting
+
+4. BUSINESS CONSIDERATIONS:
+   - Cost of false positives (blocking legitimate customers)
+   - Cost of false negatives (missing actual fraud)
+   - Adjust decision threshold based on business priorities
+""")
