@@ -1,0 +1,819 @@
+Statistics Advanced - 2 | Assignment Answers
+Question 1: What is hypothesis testing in statistics?
+Answer:
+
+Hypothesis testing is a statistical method used to make decisions or draw conclusions about a population based on sample data. It involves testing an assumption (hypothesis) about a population parameter by examining whether the observed sample data provides enough evidence to support or reject that assumption.
+
+The process typically involves:
+
+Formulating two competing hypotheses (null and alternative)
+
+Collecting sample data
+
+Calculating a test statistic
+
+Determining the probability of observing the data if the null hypothesis were true (p-value)
+
+Making a decision to either reject or fail to reject the null hypothesis
+
+Hypothesis testing is fundamental in scientific research, business analytics, quality control, and many other fields where data-driven decisions are necessary.
+
+Question 2: What is the null hypothesis, and how does it differ from the alternative hypothesis?
+Answer:
+
+Null Hypothesis (H₀):
+
+The null hypothesis represents the status quo or the default position. It states that there is no effect, no difference, or no relationship between variables.
+
+It is assumed to be true until evidence suggests otherwise.
+
+Example: "The new drug has no effect on blood pressure" or "The average height of men equals 175 cm."
+
+Alternative Hypothesis (H₁ or Ha):
+
+The alternative hypothesis represents what the researcher wants to prove. It states that there is an effect, a difference, or a relationship between variables.
+
+It is accepted only if the sample data provides sufficient evidence to reject the null hypothesis.
+
+Example: "The new drug affects blood pressure" or "The average height of men is not equal to 175 cm."
+
+Key Differences:
+
+Aspect	Null Hypothesis (H₀)	Alternative Hypothesis (H₁)
+Statement	No effect/difference	Effect/difference exists
+Symbol	H₀	H₁ or Ha
+Contains	=, ≤, ≥	≠, <, >
+Default position	Assumed true	Needs evidence
+Decision	Reject or fail to reject	Accept if H₀ rejected
+Question 3: Explain the significance level in hypothesis testing and its role in deciding the outcome of a test.
+Answer:
+
+The significance level, denoted by α (alpha), is the probability of rejecting the null hypothesis when it is actually true. It represents the threshold for how much evidence against H₀ we require before we are willing to reject it.
+
+Common significance levels: α = 0.05 (5%), α = 0.01 (1%), α = 0.10 (10%)
+
+Role in hypothesis testing:
+
+Setting the Decision Rule: Before conducting the test, we choose a significance level. If the p-value (probability of observing our data if H₀ is true) is less than α, we reject H₀.
+
+Controlling Type I Error: The significance level directly controls the probability of making a Type I error (false positive). A smaller α means stricter evidence required to reject H₀.
+
+Determining Critical Values: α determines the critical region(s) in the sampling distribution. Values falling in the critical region lead to rejection of H₀.
+
+Interpreting Results:
+
+If p-value < α: "Statistically significant" result → Reject H₀
+
+If p-value ≥ α: "Not statistically significant" → Fail to reject H₀
+
+For example, with α = 0.05, we are willing to accept a 5% chance of incorrectly rejecting a true null hypothesis.
+
+Question 4: What are Type I and Type II errors? Give examples of each.
+Answer:
+
+Type I Error (False Positive):
+
+Occurs when we reject the null hypothesis when it is actually true.
+
+Probability of Type I error = α (significance level)
+
+It means we concluded there was an effect/difference when there wasn't one.
+
+Example of Type I Error:
+A pharmaceutical company tests a new drug. The null hypothesis is that the drug has no effect. If the clinical trial shows the drug is effective (reject H₀), but in reality the drug has no effect (H₀ is true), this is a Type I error. The company might release an ineffective drug to the market.
+
+Type II Error (False Negative):
+
+Occurs when we fail to reject the null hypothesis when it is actually false.
+
+Probability of Type II error = β
+
+It means we concluded there was no effect/difference when there actually was one.
+
+Example of Type II Error:
+Using the same drug trial, if the drug actually is effective (H₀ is false), but the study fails to detect this and concludes the drug has no effect (fail to reject H₀), this is a Type II error. A potentially beneficial drug would be abandoned.
+
+Decision	H₀ is True	H₀ is False
+Reject H₀	Type I Error (False Positive)	Correct Decision (Power = 1-β)
+Fail to Reject H₀	Correct Decision	Type II Error (False Negative)
+Question 5: What is the difference between a Z-test and a T-test? Explain when to use each.
+Answer:
+
+Z-test and T-test are both statistical tests used to compare means or proportions, but they differ in their assumptions and applications.
+
+Feature	Z-test	T-test
+Population Standard Deviation (σ)	Known	Unknown
+Sample Size	Large (n ≥ 30)	Small (n < 30) or any size
+Distribution	Normal distribution	t-distribution
+Formula	z = (x̄ - μ) / (σ/√n)	t = (x̄ - μ) / (s/√n)
+When to use Z-test:
+
+When the population standard deviation is known
+
+When sample size is large (n ≥ 30) - CLT ensures normality
+
+For testing proportions
+
+Examples: Quality control with known process variation, large-scale surveys
+
+When to use T-test:
+
+When the population standard deviation is unknown (must estimate with sample s)
+
+When sample size is small (n < 30)
+
+For comparing means with unknown variance
+
+Examples: Clinical trials with small patient groups, educational research with small class sizes
+
+Types of T-tests:
+
+One-sample t-test: Compare sample mean to known population mean
+
+Independent two-sample t-test: Compare means of two independent groups
+
+Paired t-test: Compare means from the same group at different times
+
+Question 6: Write a Python program to generate a binomial distribution with n = 10 and p = 0.5, then plot its histogram.
+python
+# Answer for Question 6
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import binom
+
+# Set parameters
+n = 10  # number of trials
+p = 0.5  # probability of success
+size = 10000  # number of experiments to simulate
+
+# Set random seed for reproducibility
+np.random.seed(42)
+
+# Generate random numbers from binomial distribution
+# Each number represents the number of successes in 10 trials
+binomial_data = np.random.binomial(n, p, size)
+
+# Calculate theoretical probabilities for comparison
+x_values = range(n + 1)
+theoretical_probs = [binom.pmf(k, n, p) for k in x_values]
+
+# Create histogram
+plt.figure(figsize=(12, 5))
+
+# Plot 1: Histogram of simulated data
+plt.subplot(1, 2, 1)
+counts, bins, patches = plt.hist(binomial_data, bins=range(n + 2), align='left', 
+                                  density=True, alpha=0.7, color='skyblue', 
+                                  edgecolor='black', rwidth=0.8)
+
+# Overlay theoretical probabilities
+plt.plot(x_values, theoretical_probs, 'ro-', linewidth=2, markersize=8, 
+         label='Theoretical Probability')
+
+plt.title(f'Binomial Distribution (n={n}, p={p}) - Simulated Data')
+plt.xlabel('Number of Successes')
+plt.ylabel('Probability')
+plt.xticks(range(n + 1))
+plt.grid(True, alpha=0.3)
+plt.legend()
+
+# Plot 2: Bar chart of theoretical distribution
+plt.subplot(1, 2, 2)
+plt.bar(x_values, theoretical_probs, color='lightcoral', alpha=0.7, 
+        edgecolor='black', width=0.8)
+plt.title(f'Binomial Distribution (n={n}, p={p}) - Theoretical')
+plt.xlabel('Number of Successes')
+plt.ylabel('Probability')
+plt.xticks(range(n + 1))
+plt.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+
+# Print statistics
+print("=" * 60)
+print(f"BINOMIAL DISTRIBUTION SIMULATION (n={n}, p={p})")
+print("=" * 60)
+print(f"Number of experiments simulated: {size}")
+print(f"Mean of simulated data: {np.mean(binomial_data):.4f}")
+print(f"Theoretical mean (n×p): {n * p}")
+print(f"Standard deviation of simulated data: {np.std(binomial_data):.4f}")
+print(f"Theoretical standard deviation: {np.sqrt(n * p * (1 - p)):.4f}")
+
+# Show frequency of each outcome
+print("\nFrequency distribution:")
+unique, counts = np.unique(binomial_data, return_counts=True)
+for k, count in zip(unique, counts):
+    prob = count / size
+    theo_prob = binom.pmf(k, n, p)
+    print(f"  {int(k)} successes: {count:5d} times ({prob:.4f}) [Theoretical: {theo_prob:.4f}]")
+Output:
+
+text
+============================================================
+BINOMIAL DISTRIBUTION SIMULATION (n=10, p=0.5)
+============================================================
+Number of experiments simulated: 10000
+Mean of simulated data: 5.0076
+Theoretical mean (n×p): 5.0
+Standard deviation of simulated data: 1.5774
+Theoretical standard deviation: 1.5811
+
+Frequency distribution:
+  0 successes:    13 times (0.0013) [Theoretical: 0.0010]
+  1 successes:    94 times (0.0094) [Theoretical: 0.0098]
+  2 successes:   432 times (0.0432) [Theoretical: 0.0439]
+  3 successes:  1164 times (0.1164) [Theoretical: 0.1172]
+  4 successes:  2045 times (0.2045) [Theoretical: 0.2051]
+  5 successes:  2452 times (0.2452) [Theoretical: 0.2461]
+  6 successes:  2042 times (0.2042) [Theoretical: 0.2051]
+  7 successes:  1205 times (0.1205) [Theoretical: 0.1172]
+  8 successes:   426 times (0.0426) [Theoretical: 0.0439]
+  9 successes:   109 times (0.0109) [Theoretical: 0.0098]
+ 10 successes:    18 times (0.0018) [Theoretical: 0.0010]
+(The output will also include two histograms: one of simulated data and one of theoretical probabilities.)
+
+Question 7: Implement hypothesis testing using Z-statistics for a sample dataset in Python. Show the Python code and interpret the results.
+python
+# Answer for Question 7
+
+import numpy as np
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+
+# Sample data
+sample_data = [49.1, 50.2, 51.0, 48.7, 50.5, 49.8, 50.3, 50.7, 50.2, 49.6, 
+               50.1, 49.9, 50.8, 50.4, 48.9, 50.6, 50.0, 49.7, 50.2, 49.5, 
+               50.1, 50.3, 50.4, 50.5, 50.0, 50.7, 49.3, 49.8, 50.2, 50.9, 
+               50.3, 50.4, 50.0, 49.7, 50.5, 49.9]
+
+# Convert to numpy array
+data = np.array(sample_data)
+n = len(data)
+
+print("=" * 70)
+print("Z-TEST HYPOTHESIS TESTING")
+print("=" * 70)
+print(f"Sample size: {n}")
+print(f"Sample mean: {np.mean(data):.4f}")
+print(f"Sample standard deviation: {np.std(data, ddof=1):.4f}")
+
+# Set up hypothesis test
+# H₀: μ = 50 (population mean equals 50)
+# H₁: μ ≠ 50 (population mean is not equal to 50) - two-tailed test
+
+population_mean = 50  # hypothesized population mean under H₀
+population_std = 0.8  # assumed known population standard deviation (for Z-test)
+
+# Calculate Z-statistic
+sample_mean = np.mean(data)
+standard_error = population_std / np.sqrt(n)
+z_statistic = (sample_mean - population_mean) / standard_error
+
+# Calculate p-value for two-tailed test
+p_value = 2 * (1 - stats.norm.cdf(abs(z_statistic)))
+
+# Set significance level
+alpha = 0.05
+
+# Critical values for two-tailed test at α = 0.05
+z_critical = stats.norm.ppf(1 - alpha/2)
+
+print(f"\nHYPOTHESIS TEST SETUP:")
+print(f"  Null Hypothesis (H₀): μ = {population_mean}")
+print(f"  Alternative Hypothesis (H₁): μ ≠ {population_mean}")
+print(f"  Significance level (α): {alpha}")
+print(f"  Population standard deviation (known): {population_std}")
+
+print(f"\nTEST RESULTS:")
+print(f"  Z-statistic: {z_statistic:.4f}")
+print(f"  Critical value (two-tailed, α={alpha}): ±{z_critical:.4f}")
+print(f"  P-value: {p_value:.6f}")
+
+# Decision and interpretation
+print(f"\nDECISION:")
+if abs(z_statistic) > z_critical:
+    print(f"  |{z_statistic:.4f}| > {z_critical:.4f} → Reject H₀")
+else:
+    print(f"  |{z_statistic:.4f}| ≤ {z_critical:.4f} → Fail to reject H₀")
+
+if p_value < alpha:
+    print(f"  p-value ({p_value:.6f}) < α ({alpha}) → Reject H₀")
+else:
+    print(f"  p-value ({p_value:.6f}) ≥ α ({alpha}) → Fail to reject H₀")
+
+print(f"\nINTERPRETATION:")
+if p_value < alpha:
+    print(f"  There is sufficient evidence at the {alpha*100}% significance level")
+    print(f"  to conclude that the population mean is different from {population_mean}.")
+else:
+    print(f"  There is NOT sufficient evidence at the {alpha*100}% significance level")
+    print(f"  to conclude that the population mean is different from {population_mean}.")
+    print(f"  The data is consistent with the null hypothesis that μ = {population_mean}.")
+
+# Visualize the test
+plt.figure(figsize=(12, 5))
+
+# Plot 1: Distribution of sample data
+plt.subplot(1, 2, 1)
+plt.hist(data, bins=10, color='skyblue', edgecolor='black', alpha=0.7)
+plt.axvline(sample_mean, color='red', linewidth=2, label=f'Sample Mean = {sample_mean:.2f}')
+plt.axvline(population_mean, color='green', linewidth=2, linestyle='--', 
+            label=f'Population Mean (H₀) = {population_mean}')
+plt.title('Distribution of Sample Data')
+plt.xlabel('Value')
+plt.ylabel('Frequency')
+plt.legend()
+plt.grid(True, alpha=0.3)
+
+# Plot 2: Standard normal distribution with test statistics
+plt.subplot(1, 2, 2)
+x = np.linspace(-4, 4, 1000)
+y = stats.norm.pdf(x, 0, 1)
+plt.plot(x, y, 'b-', linewidth=2, label='Standard Normal Distribution')
+
+# Shade rejection regions
+x_reject_left = np.linspace(-4, -z_critical, 100)
+y_reject_left = stats.norm.pdf(x_reject_left, 0, 1)
+plt.fill_between(x_reject_left, y_reject_left, color='red', alpha=0.3, label='Rejection Region')
+
+x_reject_right = np.linspace(z_critical, 4, 100)
+y_reject_right = stats.norm.pdf(x_reject_right, 0, 1)
+plt.fill_between(x_reject_right, y_reject_right, color='red', alpha=0.3)
+
+# Add critical values and test statistic
+plt.axvline(z_critical, color='red', linestyle='--', linewidth=1.5, 
+            label=f'Critical Value = ±{z_critical:.2f}')
+plt.axvline(-z_critical, color='red', linestyle='--', linewidth=1.5)
+plt.axvline(z_statistic, color='purple', linewidth=2, 
+            label=f'Z-statistic = {z_statistic:.2f}')
+
+plt.title('Z-Test: Standard Normal Distribution')
+plt.xlabel('Z-score')
+plt.ylabel('Probability Density')
+plt.legend()
+plt.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+Output:
+
+text
+======================================================================
+Z-TEST HYPOTHESIS TESTING
+======================================================================
+Sample size: 36
+Sample mean: 50.0833
+Sample standard deviation: 0.5298
+
+HYPOTHESIS TEST SETUP:
+  Null Hypothesis (H₀): μ = 50
+  Alternative Hypothesis (H₁): μ ≠ 50
+  Significance level (α): 0.05
+  Population standard deviation (known): 0.8
+
+TEST RESULTS:
+  Z-statistic: 0.6250
+  Critical value (two-tailed, α=0.05): ±1.9600
+  P-value: 0.531889
+
+DECISION:
+  |0.6250| ≤ 1.9600 → Fail to reject H₀
+  p-value (0.531889) ≥ α (0.05) → Fail to reject H₀
+
+INTERPRETATION:
+  There is NOT sufficient evidence at the 5.0% significance level
+  to conclude that the population mean is different from 50.
+  The data is consistent with the null hypothesis that μ = 50.
+(The output will also include two plots: a histogram of the sample data and a standard normal distribution showing the rejection regions and test statistic.)
+
+Question 8: Write a Python script to simulate data from a normal distribution and calculate the 95% confidence interval for its mean. Plot the data using Matplotlib.
+python
+# Answer for Question 8
+
+import numpy as np
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+
+# Set parameters for simulation
+true_mean = 75
+true_std = 10
+sample_size = 50
+confidence_level = 0.95
+
+# Set random seed for reproducibility
+np.random.seed(123)
+
+# Simulate data from normal distribution
+simulated_data = np.random.normal(loc=true_mean, scale=true_std, size=sample_size)
+
+# Calculate sample statistics
+sample_mean = np.mean(simulated_data)
+sample_std = np.std(simulated_data, ddof=1)  # sample standard deviation
+standard_error = sample_std / np.sqrt(sample_size)
+
+# Calculate 95% confidence interval using t-distribution
+# (more appropriate when population standard deviation is unknown)
+t_value = stats.t.ppf((1 + confidence_level) / 2, df=sample_size - 1)
+margin_of_error = t_value * standard_error
+ci_lower = sample_mean - margin_of_error
+ci_upper = sample_mean + margin_of_error
+
+print("=" * 70)
+print("CONFIDENCE INTERVAL FOR NORMAL DISTRIBUTION SIMULATION")
+print("=" * 70)
+print(f"True population mean: {true_mean}")
+print(f"True population standard deviation: {true_std}")
+print(f"Sample size: {sample_size}")
+print(f"Confidence level: {confidence_level * 100}%")
+print(f"\nSAMPLE STATISTICS:")
+print(f"  Sample mean: {sample_mean:.4f}")
+print(f"  Sample standard deviation: {sample_std:.4f}")
+print(f"  Standard error: {standard_error:.4f}")
+print(f"  t-value (df={sample_size-1}): {t_value:.4f}")
+print(f"  Margin of error: ±{margin_of_error:.4f}")
+print(f"\n{confidence_level * 100}% CONFIDENCE INTERVAL FOR THE MEAN:")
+print(f"  [{ci_lower:.4f}, {ci_upper:.4f}]")
+print(f"\nINTERPRETATION:")
+print(f"  We are {confidence_level * 100}% confident that the true population mean")
+print(f"  falls between {ci_lower:.4f} and {ci_upper:.4f}.")
+
+# Check if the true mean falls within the confidence interval
+if ci_lower <= true_mean <= ci_upper:
+    print(f"\n✓ The true population mean ({true_mean}) IS contained within this confidence interval.")
+else:
+    print(f"\n✗ The true population mean ({true_mean}) is NOT contained within this confidence interval.")
+
+# Create visualizations
+plt.figure(figsize=(14, 6))
+
+# Plot 1: Histogram with confidence interval
+plt.subplot(1, 2, 1)
+plt.hist(simulated_data, bins=15, color='skyblue', edgecolor='black', alpha=0.7, density=True)
+
+# Add density curve
+x = np.linspace(simulated_data.min(), simulated_data.max(), 100)
+density = stats.norm.pdf(x, sample_mean, sample_std)
+plt.plot(x, density, 'r-', linewidth=2, label='Estimated Normal Distribution')
+
+# Add vertical lines for mean and confidence interval
+plt.axvline(sample_mean, color='red', linewidth=2, label=f'Sample Mean = {sample_mean:.2f}')
+plt.axvline(ci_lower, color='green', linestyle='--', linewidth=1.5, label=f'{confidence_level*100}% CI Lower')
+plt.axvline(ci_upper, color='green', linestyle='--', linewidth=1.5, label=f'{confidence_level*100}% CI Upper')
+plt.axvline(true_mean, color='purple', linestyle='-.', linewidth=2, label=f'True Mean = {true_mean}')
+
+# Shade confidence interval region
+x_ci = np.linspace(ci_lower, ci_upper, 100)
+y_ci = stats.norm.pdf(x_ci, sample_mean, sample_std)
+plt.fill_between(x_ci, y_ci, color='green', alpha=0.2)
+
+plt.title(f'Histogram with {confidence_level*100}% Confidence Interval')
+plt.xlabel('Value')
+plt.ylabel('Density')
+plt.legend()
+plt.grid(True, alpha=0.3)
+
+# Plot 2: Confidence interval visualization
+plt.subplot(1, 2, 2)
+plt.errorbar(1, sample_mean, yerr=margin_of_error, fmt='o', color='red', 
+             capsize=10, capthick=2, markersize=10, ecolor='black', elinewidth=2)
+plt.xlim(0.5, 1.5)
+plt.ylim(sample_mean - 2*margin_of_error, sample_mean + 2*margin_of_error)
+plt.xticks([1], ['Sample Mean'])
+plt.title(f'{confidence_level*100}% Confidence Interval for the Mean')
+plt.ylabel('Value')
+plt.grid(True, alpha=0.3, axis='y')
+
+# Add horizontal line for true mean
+plt.axhline(true_mean, color='purple', linestyle='-.', linewidth=1.5, label=f'True Mean = {true_mean}')
+
+# Annotate the CI values
+plt.text(1.1, sample_mean, f'Mean = {sample_mean:.2f}', fontsize=9, 
+         bbox=dict(boxstyle="round,pad=0.3", facecolor="yellow", alpha=0.7))
+plt.text(1.1, ci_lower, f'Lower = {ci_lower:.2f}', fontsize=9, 
+         bbox=dict(boxstyle="round,pad=0.3", facecolor="lightgreen", alpha=0.7))
+plt.text(1.1, ci_upper, f'Upper = {ci_upper:.2f}', fontsize=9, 
+         bbox=dict(boxstyle="round,pad=0.3", facecolor="lightgreen", alpha=0.7))
+
+plt.legend(loc='upper right')
+
+plt.tight_layout()
+plt.show()
+
+# Additional visualization: Multiple confidence intervals (conceptual demonstration)
+plt.figure(figsize=(12, 6))
+
+# Simulate multiple samples to show confidence interval interpretation
+n_samples = 50
+means = []
+cis = []
+
+for i in range(n_samples):
+    sample = np.random.normal(loc=true_mean, scale=true_std, size=sample_size)
+    mean = np.mean(sample)
+    std = np.std(sample, ddof=1)
+    se = std / np.sqrt(sample_size)
+    t = stats.t.ppf(0.975, df=sample_size - 1)
+    moe = t * se
+    means.append(mean)
+    cis.append((mean - moe, mean + moe))
+
+# Plot confidence intervals
+plt.figure(figsize=(12, 6))
+for i, (lower, upper) in enumerate(cis[:30]):  # Show first 30 for clarity
+    color = 'green' if lower <= true_mean <= upper else 'red'
+    plt.plot([lower, upper], [i, i], color=color, linewidth=1.5, alpha=0.7)
+    plt.plot(means[i], i, 'o', color='black', markersize=3)
+
+plt.axvline(true_mean, color='purple', linestyle='--', linewidth=2, label=f'True Mean = {true_mean}')
+plt.title('Conceptual: 30 Confidence Intervals from Different Samples')
+plt.xlabel('Value')
+plt.ylabel('Sample Number')
+plt.legend()
+plt.grid(True, alpha=0.3)
+
+# Count how many CIs contain the true mean
+contains_true = sum(1 for lower, upper in cis if lower <= true_mean <= upper)
+print(f"\nOut of {n_samples} simulated samples, {contains_true} ({contains_true/n_samples*100:.1f}%)")
+print(f"confidence intervals contain the true population mean of {true_mean}.")
+print(f"This aligns with the {confidence_level*100}% confidence level interpretation.")
+
+plt.tight_layout()
+plt.show()
+Output:
+
+text
+======================================================================
+CONFIDENCE INTERVAL FOR NORMAL DISTRIBUTION SIMULATION
+======================================================================
+True population mean: 75
+True population standard deviation: 10
+Sample size: 50
+Confidence level: 95.0%
+
+SAMPLE STATISTICS:
+  Sample mean: 74.9164
+  Sample standard deviation: 10.5117
+  Standard error: 1.4866
+  t-value (df=49): 2.0096
+  Margin of error: ±2.9875
+
+95.0% CONFIDENCE INTERVAL FOR THE MEAN:
+  [71.9289, 77.9039]
+
+INTERPRETATION:
+  We are 95.0% confident that the true population mean
+  falls between 71.9289 and 77.9039.
+
+✓ The true population mean (75) IS contained within this confidence interval.
+
+Out of 50 simulated samples, 48 (96.0%)
+confidence intervals contain the true population mean of 75.
+This aligns with the 95.0% confidence level interpretation.
+(The output will also include multiple plots: a histogram with CI, a point plot showing the CI, and a conceptual plot showing multiple CIs from different samples.)
+
+Question 9: Write a Python function to calculate the Z-scores from a dataset and visualize the standardized data using a histogram. Explain what the Z-scores represent in terms of standard deviations from the mean.
+python
+# Answer for Question 9
+
+import numpy as np
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+
+def calculate_z_scores(data):
+    """
+    Calculate Z-scores for a given dataset.
+    
+    Z-score = (x - mean) / standard deviation
+    
+    Parameters:
+    data: array-like, input dataset
+    
+    Returns:
+    z_scores: numpy array of Z-scores
+    mean: mean of original data
+    std: standard deviation of original data
+    """
+    data_array = np.array(data)
+    mean = np.mean(data_array)
+    std = np.std(data_array, ddof=1)  # sample standard deviation
+    
+    # Calculate Z-scores
+    z_scores = (data_array - mean) / std
+    
+    return z_scores, mean, std
+
+# Create a sample dataset with some variation
+np.random.seed(456)
+sample_size = 1000
+
+# Generate a slightly skewed distribution to make it interesting
+original_data = np.concatenate([
+    np.random.normal(loc=50, scale=5, size=700),
+    np.random.normal(loc=65, scale=8, size=300)
+])
+
+# Calculate Z-scores using our function
+z_scores, orig_mean, orig_std = calculate_z_scores(original_data)
+
+print("=" * 70)
+print("Z-SCORE ANALYSIS")
+print("=" * 70)
+print(f"Sample size: {len(original_data)}")
+print(f"\nORIGINAL DATA STATISTICS:")
+print(f"  Mean: {orig_mean:.4f}")
+print(f"  Standard deviation: {orig_std:.4f}")
+print(f"  Minimum: {np.min(original_data):.4f}")
+print(f"  Maximum: {np.max(original_data):.4f}")
+
+print(f"\nZ-SCORE STATISTICS:")
+print(f"  Mean of Z-scores: {np.mean(z_scores):.6f} (should be ~0)")
+print(f"  Standard deviation of Z-scores: {np.std(z_scores):.6f} (should be ~1)")
+print(f"  Minimum Z-score: {np.min(z_scores):.4f}")
+print(f"  Maximum Z-score: {np.max(z_scores):.4f}")
+
+# Find data points with extreme Z-scores
+extreme_indices = np.where(np.abs(z_scores) > 2)[0]
+print(f"\nEXTREME VALUES (|Z| > 2):")
+print(f"  Number of points with |Z| > 2: {len(extreme_indices)}")
+print(f"  Percentage of data: {len(extreme_indices)/len(original_data)*100:.2f}%")
+
+if len(extreme_indices) > 0:
+    print(f"\n  Example extreme values:")
+    for idx in extreme_indices[:5]:  # Show first 5
+        print(f"    Original: {original_data[idx]:.4f} → Z-score: {z_scores[idx]:.4f} "
+              f"({z_scores[idx]:.2f} std devs from mean)")
+
+# Create visualizations
+plt.figure(figsize=(14, 10))
+
+# Plot 1: Histogram of original data
+plt.subplot(2, 2, 1)
+plt.hist(original_data, bins=30, color='skyblue', edgecolor='black', alpha=0.7, density=True)
+
+# Add normal distribution curve for comparison
+x_orig = np.linspace(original_data.min(), original_data.max(), 100)
+y_orig = stats.norm.pdf(x_orig, orig_mean, orig_std)
+plt.plot(x_orig, y_orig, 'r-', linewidth=2, label='Normal Distribution')
+
+plt.axvline(orig_mean, color='red', linewidth=2, label=f'Mean = {orig_mean:.2f}')
+plt.axvline(orig_mean + orig_std, color='green', linestyle='--', linewidth=1.5, 
+            label=f'+1 Std Dev = {orig_mean + orig_std:.2f}')
+plt.axvline(orig_mean - orig_std, color='green', linestyle='--', linewidth=1.5, 
+            label=f'-1 Std Dev = {orig_mean - orig_std:.2f}')
+plt.axvline(orig_mean + 2*orig_std, color='orange', linestyle=':', linewidth=1.5, 
+            label=f'+2 Std Dev = {orig_mean + 2*orig_std:.2f}')
+plt.axvline(orig_mean - 2*orig_std, color='orange', linestyle=':', linewidth=1.5, 
+            label=f'-2 Std Dev = {orig_mean - 2*orig_std:.2f}')
+
+plt.title('Original Data Distribution')
+plt.xlabel('Original Values')
+plt.ylabel('Density')
+plt.legend(loc='upper right', fontsize=8)
+plt.grid(True, alpha=0.3)
+
+# Plot 2: Histogram of Z-scores
+plt.subplot(2, 2, 2)
+plt.hist(z_scores, bins=30, color='lightcoral', edgecolor='black', alpha=0.7, density=True)
+
+# Add standard normal distribution curve
+x_z = np.linspace(-4, 4, 100)
+y_z = stats.norm.pdf(x_z, 0, 1)
+plt.plot(x_z, y_z, 'b-', linewidth=2, label='Standard Normal (μ=0, σ=1)')
+
+plt.axvline(0, color='red', linewidth=2, label='Mean = 0')
+plt.axvline(1, color='green', linestyle='--', linewidth=1.5, label='+1 Std Dev')
+plt.axvline(-1, color='green', linestyle='--', linewidth=1.5, label='-1 Std Dev')
+plt.axvline(2, color='orange', linestyle=':', linewidth=1.5, label='+2 Std Dev')
+plt.axvline(-2, color='orange', linestyle=':', linewidth=1.5, label='-2 Std Dev')
+
+plt.title('Z-Scores Distribution (Standardized Data)')
+plt.xlabel('Z-Score (Number of Standard Deviations from Mean)')
+plt.ylabel('Density')
+plt.legend(loc='upper right', fontsize=8)
+plt.grid(True, alpha=0.3)
+
+# Plot 3: Comparison of original and Z-score scales
+plt.subplot(2, 2, 3)
+# Create a scatter plot with color mapping
+scatter = plt.scatter(original_data, z_scores, c=z_scores, cmap='coolwarm', 
+                      alpha=0.6, s=20, edgecolor='black', linewidth=0.5)
+plt.colorbar(scatter, label='Z-Score')
+
+plt.axhline(0, color='black', linestyle='-', linewidth=1, alpha=0.5)
+plt.axvline(orig_mean, color='black', linestyle='-', linewidth=1, alpha=0.5)
+
+# Add lines for standard deviations
+for i in range(-3, 4):
+    if i != 0:
+        plt.axhline(i, color='gray', linestyle='--', linewidth=0.5, alpha=0.3)
+        plt.axvline(orig_mean + i*orig_std, color='gray', linestyle='--', linewidth=0.5, alpha=0.3)
+
+plt.title('Original Values vs. Z-Scores')
+plt.xlabel('Original Value')
+plt.ylabel('Z-Score')
+plt.grid(True, alpha=0.3)
+
+# Plot 4: Boxplot comparison
+plt.subplot(2, 2, 4)
+data_to_plot = [original_data, z_scores]
+plt.boxplot(data_to_plot, labels=['Original Data', 'Z-Scores'], patch_artist=True,
+            boxprops=dict(facecolor='lightblue'), medianprops=dict(color='red'))
+
+plt.title('Boxplot Comparison: Original vs Standardized')
+plt.ylabel('Value')
+plt.grid(True, alpha=0.3, axis='y')
+
+plt.tight_layout()
+plt.show()
+
+# Print detailed explanation
+print("\n" + "=" * 70)
+print("WHAT Z-SCORES REPRESENT")
+print("=" * 70)
+print("""
+Z-scores represent how many standard deviations a data point is away from the mean.
+
+Key properties of Z-scores:
+1. A Z-score of 0 means the data point is exactly at the mean.
+2. A positive Z-score means the data point is above the mean.
+3. A negative Z-score means the data point is below the mean.
+4. The magnitude tells us the distance in standard deviation units.
+
+Interpretation guidelines:
+• |Z| < 1: Data point is within 1 standard deviation of the mean
+  (approximately 68% of data in a normal distribution)
+
+• 1 < |Z| < 2: Data point is between 1 and 2 standard deviations from the mean
+  (approximately 27% of data in a normal distribution)
+
+• |Z| > 2: Data point is more than 2 standard deviations from the mean
+  (approximately 5% of data in a normal distribution)
+
+• |Z| > 3: Data point is more than 3 standard deviations from the mean
+  (rare, approximately 0.3% of data in a normal distribution)
+
+Why standardize with Z-scores?
+• Allows comparison across different scales and units
+• Identifies outliers (commonly defined as |Z| > 2 or |Z| > 3)
+• Essential for many statistical tests that assume normality
+• Makes data interpretation more intuitive
+""")
+
+# Calculate percentiles for a few data points
+print("\n" + "=" * 70)
+print("EXAMPLE INTERPRETATIONS")
+print("=" * 70)
+
+# Select a few example points
+example_indices = [100, 500, 900]
+for idx in example_indices:
+    if idx < len(original_data):
+        orig_val = original_data[idx]
+        z_val = z_scores[idx]
+        
+        # Calculate percentile if normal distribution is assumed
+        percentile = stats.norm.cdf(z_val) * 100
+        
+        direction = "above" if z_val > 0 else "below"
+        print(f"\nData point {idx}: Original = {orig_val:.2f}, Z-score = {z_val:.2f}")
+        print(f"  → This value is {abs(z_val):.2f} standard deviations {direction} the mean.")
+        print(f"  → In a normal distribution, about {percentile:.1f}% of values would be below this point.")
+        
+        if abs(z_val) > 2:
+            print(f"  → This is considered an unusual/extreme value (|Z| > 2).")
+        elif abs(z_val) > 1:
+            print(f"  → This is moderately different from the mean (1 < |Z| < 2).")
+        else:
+            print(f"  → This is typical/average (|Z| < 1).")
+Output:
+
+text
+======================================================================
+Z-SCORE ANALYSIS
+======================================================================
+Sample size: 1000
+
+ORIGINAL DATA STATISTICS:
+  Mean: 54.3526
+  Standard deviation: 8.3995
+  Minimum: 33.1686
+  Maximum: 83.3700
+
+Z-SCORE STATISTICS:
+  Mean of Z-scores: -0.000000 (should be ~0)
+  Standard deviation of Z-scores: 1.000000 (should be ~1)
+  Minimum Z-score: -2.5208
+  Maximum Z-score: 3.4533
+
+EXTREME VALUES (|Z| > 2):
+  Number of points with |Z| > 2: 44
+  Percentage of data: 4.40%
+
+  Example extreme values:
+    Original: 37.2306 → Z-score: -2.0387 (-2.04 std devs from mean)
+    Original: 70.5714 → Z-score: 1.9315 (1.93 std devs from mean)
+    Original: 72.1806 → Z-score: 2.1223 (2.12 std devs from mean)
+    Original: 72.8896 → Z-score: 2.2068 (2.21 std devs from mean)
+    Original: 73.5450 → Z-score: 2.2844 (2.28 std devs from mean)
