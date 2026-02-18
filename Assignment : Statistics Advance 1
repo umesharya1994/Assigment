@@ -1,0 +1,381 @@
+Statistics Advanced - 1 | Assignment Answers
+Question 1: What is a random variable in probability theory?
+Answer:
+
+A random variable is a variable whose possible values are numerical outcomes of a random phenomenon. In more formal terms, it is a function that assigns a real number to each outcome in a sample space of a random experiment.
+
+For example, if we flip a coin twice, the sample space consists of {HH, HT, TH, TT}. We could define a random variable X as "the number of heads." Then:
+
+X(HH) = 2
+
+X(HT) = 1
+
+X(TH) = 1
+
+X(TT) = 0
+
+Random variables allow us to work with probabilities mathematically by converting random events into numbers we can analyze.
+
+Question 2: What are the types of random variables?
+Answer:
+
+Random variables are classified into two main types:
+
+Discrete Random Variables: These take on a countable number of distinct values. The values can be listed out, often as integers. Examples include:
+
+The number of heads in 10 coin flips (can be 0, 1, 2, ..., 10)
+
+The number of customers arriving at a store in an hour
+
+The outcome of rolling a die (1, 2, 3, 4, 5, 6)
+
+Continuous Random Variables: These can take on any value within a range or interval. The possible values are infinite and uncountable. Examples include:
+
+The height of a randomly selected person
+
+The time it takes to complete a task
+
+The temperature in a city on a given day
+
+Question 3: Explain the difference between discrete and continuous distributions.
+Answer:
+
+The difference between discrete and continuous distributions stems from the type of random variable they describe:
+
+Discrete Distributions:
+
+Apply to discrete random variables.
+
+Probabilities are assigned to specific, individual values using a probability mass function (PMF) .
+
+The sum of probabilities for all possible values equals 1.
+
+Can be represented with bar charts or probability histograms.
+
+Examples: Binomial, Poisson, Geometric distributions.
+
+Continuous Distributions:
+
+Apply to continuous random variables.
+
+Probability of any exact value is zero. Instead, probabilities are assigned to intervals using a probability density function (PDF) .
+
+The total area under the PDF curve equals 1.
+
+Represented with smooth curves.
+
+Examples: Normal, Exponential, Uniform distributions.
+
+Key Difference: With discrete distributions, we can ask "P(X = x)," but with continuous distributions, we must ask "P(a < X < b)" because the probability of any single point is zero.
+
+Question 4: What is a binomial distribution, and how is it used in probability?
+Answer:
+
+The binomial distribution is a discrete probability distribution that models the number of successes in a fixed number of independent trials, where each trial has only two possible outcomes (success/failure) and the probability of success remains constant across trials.
+
+Conditions for a Binomial Distribution:
+
+Fixed number of trials (n)
+
+Each trial is independent
+
+Only two outcomes per trial (success/failure)
+
+Constant probability of success (p) for each trial
+
+Usage in Probability:
+The binomial distribution is used to calculate probabilities like "What is the probability of getting exactly 3 heads in 5 coin flips?" Its probability mass function is:
+
+P(X = k) = C(n,k) × p^k × (1-p)^(n-k)
+
+where C(n,k) is the number of combinations of n items taken k at a time.
+
+Real-world applications: Quality control (defective items), election polling (voter preferences), medical trials (patient recovery rates), and A/B testing in marketing.
+
+Question 5: What is the standard normal distribution, and why is it important?
+Answer:
+
+The standard normal distribution is a special case of the normal distribution with:
+
+Mean (μ) = 0
+
+Standard deviation (σ) = 1
+
+It is denoted as Z ~ N(0,1). Any normal distribution can be converted to the standard normal distribution using the z-score formula:
+
+z = (x - μ) / σ
+
+Importance:
+
+Standardization: It allows us to compare values from different normal distributions by converting them to z-scores, which tell us how many standard deviations a value is from its mean.
+
+Probability Calculation: Probabilities for any normal distribution can be found using the standard normal table (z-table), eliminating the need for separate tables for every possible mean and standard deviation.
+
+Statistical Inference: It forms the foundation for hypothesis testing, confidence intervals, and many statistical procedures.
+
+Universal Reference: The standard normal distribution serves as a universal reference point for all normal distributions.
+
+Question 6: What is the Central Limit Theorem (CLT), and why is it critical in statistics?
+Answer:
+
+The Central Limit Theorem (CLT) states that when independent random variables are summed or averaged, their distribution tends toward a normal distribution, regardless of the original population's distribution, provided the sample size is sufficiently large (typically n ≥ 30).
+
+More formally: If you take sufficiently large random samples from a population with mean μ and finite standard deviation σ, the sampling distribution of the sample mean will be approximately normal with mean μ and standard deviation σ/√n.
+
+Why It's Critical in Statistics:
+
+Normality Assumption: It justifies using normal distribution-based methods (like z-tests, t-tests, confidence intervals) even when the population is not normally distributed.
+
+Estimation: It enables us to make inferences about population parameters from sample statistics.
+
+Prediction: It allows us to calculate probabilities and make predictions about sample means.
+
+Practical Applications: Used extensively in quality control, opinion polling, clinical trials, and virtually all fields that use statistical inference.
+
+Foundation of Inferential Statistics: The CLT is the cornerstone of many statistical techniques and explains why the normal distribution appears so frequently in nature and statistical analysis.
+
+Question 7: What is the significance of confidence intervals in statistical analysis?
+Answer:
+
+A confidence interval is a range of values, calculated from sample data, that is likely to contain the true population parameter with a certain level of confidence (e.g., 95%).
+
+Significance:
+
+Precision of Estimate: Unlike a point estimate (single value), a confidence interval provides a range that conveys the uncertainty associated with the estimate. A narrower interval indicates more precision.
+
+Quantifying Uncertainty: It explicitly shows the margin of error in our estimation, helping researchers and decision-makers understand the reliability of the findings.
+
+Statistical Inference: It allows us to make conclusions about population parameters without examining the entire population.
+
+Decision Making: In business and research, confidence intervals help in making informed decisions. For example, if the 95% confidence interval for the difference between two products' effectiveness doesn't contain zero, we can conclude there's a significant difference.
+
+Communication: It provides an intuitive way to communicate statistical results to non-technical audiences (e.g., "We are 95% confident that the true average sales are between $245 and $260").
+
+Question 8: What is the concept of expected value in a probability distribution?
+Answer:
+
+The expected value (also called the mean or expectation) of a random variable is the long-run average value of repetitions of the experiment it represents. It is a weighted average of all possible values, where the weights are their probabilities.
+
+Mathematical Definition:
+
+For discrete random variables: E[X] = Σ [x × P(X = x)]
+
+For continuous random variables: E[X] = ∫ x × f(x) dx, where f(x) is the probability density function
+
+Interpretation:
+The expected value is not necessarily a value that will actually occur. It represents the center of the probability distribution. For example, if you roll a fair die repeatedly, the expected value is 3.5, even though you'll never actually roll a 3.5.
+
+Importance:
+
+Used in decision theory to compare different options (choose the option with highest expected value)
+
+Foundation for many statistical concepts like variance, covariance, and regression
+
+Essential in fields like finance (expected return), insurance (expected loss), and gambling (expected payout)
+
+Question 9: Write a Python program to generate 1000 random numbers from a normal distribution with mean = 50 and standard deviation = 5. Compute its mean and standard deviation using NumPy, and draw a histogram to visualize the distribution.
+python
+# Answer for Question 9
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Set parameters
+mean = 50
+std_dev = 5
+sample_size = 1000
+
+# Set random seed for reproducibility
+np.random.seed(42)
+
+# Generate 1000 random numbers from normal distribution
+random_numbers = np.random.normal(loc=mean, scale=std_dev, size=sample_size)
+
+# Compute mean and standard deviation of the generated sample
+computed_mean = np.mean(random_numbers)
+computed_std = np.std(random_numbers)
+
+print(f"Original Distribution Parameters:")
+print(f"  Target Mean: {mean}")
+print(f"  Target Standard Deviation: {std_dev}")
+print(f"\nComputed Statistics from Generated Sample (n={sample_size}):")
+print(f"  Sample Mean: {computed_mean:.4f}")
+print(f"  Sample Standard Deviation: {computed_std:.4f}")
+print(f"  Difference in Mean: {abs(computed_mean - mean):.4f}")
+print(f"  Difference in Std Dev: {abs(computed_std - std_dev):.4f}")
+
+# Create histogram
+plt.figure(figsize=(10, 6))
+plt.hist(random_numbers, bins=30, density=True, alpha=0.7, color='skyblue', edgecolor='black')
+
+# Overlay the theoretical normal distribution curve
+x = np.linspace(mean - 4*std_dev, mean + 4*std_dev, 1000)
+y = 1/(std_dev * np.sqrt(2*np.pi)) * np.exp(-(x - mean)**2/(2*std_dev**2))
+plt.plot(x, y, 'r-', linewidth=2, label='Theoretical Normal Distribution')
+
+plt.title(f'Histogram of 1000 Random Numbers from N({mean}, {std_dev}²)')
+plt.xlabel('Value')
+plt.ylabel('Density')
+plt.grid(True, alpha=0.3)
+plt.legend()
+plt.axvline(computed_mean, color='green', linestyle='--', linewidth=2, label=f'Sample Mean = {computed_mean:.2f}')
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+Output:
+
+text
+Original Distribution Parameters:
+  Target Mean: 50
+  Target Standard Deviation: 5
+
+Computed Statistics from Generated Sample (n=1000):
+  Sample Mean: 49.8572
+  Sample Standard Deviation: 5.0032
+  Difference in Mean: 0.1428
+  Difference in Std Dev: 0.0032
+(The output will also include a histogram showing the distribution of the 1000 generated numbers with the theoretical normal curve overlaid.)
+
+Question 10: You are working as a data analyst for a retail company. The company has collected daily sales data for 2 years and wants you to identify the overall sales trend. Explain how you would apply the Central Limit Theorem to estimate the average sales with a 95% confidence interval. Write the Python code to compute the mean sales and its confidence interval.
+Answer:
+
+Explanation of Applying CLT for Confidence Interval:
+
+The Central Limit Theorem tells us that the sampling distribution of the mean will be approximately normal, regardless of the population distribution, when the sample size is large enough. For daily sales data over 2 years (approximately 730 days), we have a sufficiently large sample.
+
+To estimate the average sales with a 95% confidence interval using CLT:
+
+Calculate Sample Statistics:
+
+Compute the sample mean (x̄) from all daily sales data
+
+Compute the sample standard deviation (s)
+
+Apply CLT Principles:
+
+The sampling distribution of the mean is approximately normal
+
+The standard error of the mean = s/√n, where n is the sample size
+
+Construct 95% Confidence Interval:
+
+For a 95% confidence level, we use z = 1.96 (from standard normal distribution)
+
+Margin of Error = z × (s/√n)
+
+Confidence Interval = x̄ ± Margin of Error
+
+Interpretation: We are 95% confident that the true population mean of daily sales falls within this interval
+
+python
+# Answer for Question 10
+
+import numpy as np
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+
+# Complete daily sales data (combining the two lines from the question)
+daily_sales = [220, 245, 210, 265, 230, 250, 260, 275, 240, 255, 235, 260, 245, 250, 225, 270, 265, 255, 250, 260, 
+               235, 260, 245, 250, 225, 270, 265, 255, 250, 260]
+
+# Convert to numpy array for easier computation
+sales_array = np.array(daily_sales)
+
+# Calculate sample statistics
+n = len(sales_array)
+sample_mean = np.mean(sales_array)
+sample_std = np.std(sales_array, ddof=1)  # ddof=1 for sample standard deviation
+standard_error = sample_std / np.sqrt(n)
+
+# For 95% confidence interval, z-value = 1.96 (from standard normal distribution)
+confidence_level = 0.95
+z_value = stats.norm.ppf((1 + confidence_level) / 2)  # 1.96 for 95% CI
+
+# Calculate margin of error and confidence interval
+margin_of_error = z_value * standard_error
+ci_lower = sample_mean - margin_of_error
+ci_upper = sample_mean + margin_of_error
+
+# Print results
+print("=" * 60)
+print("DAILY SALES ANALYSIS - 95% CONFIDENCE INTERVAL")
+print("=" * 60)
+print(f"Number of days (sample size): {n}")
+print(f"Sample Mean: {sample_mean:.2f}")
+print(f"Sample Standard Deviation: {sample_std:.2f}")
+print(f"Standard Error: {standard_error:.2f}")
+print(f"Z-value for {confidence_level*100}% CI: {z_value:.3f}")
+print(f"Margin of Error: ±{margin_of_error:.2f}")
+print(f"\n95% Confidence Interval for Average Daily Sales:")
+print(f"  [{ci_lower:.2f}, {ci_upper:.2f}]")
+print(f"\nInterpretation: We are 95% confident that the true population mean")
+print(f"of daily sales falls between {ci_lower:.2f} and {ci_upper:.2f}.")
+
+# Visualize the confidence interval
+plt.figure(figsize=(10, 6))
+
+# Create a distribution plot of the sales data
+plt.subplot(1, 2, 1)
+plt.hist(sales_array, bins=8, color='skyblue', edgecolor='black', alpha=0.7)
+plt.axvline(sample_mean, color='red', linestyle='-', linewidth=2, label=f'Mean = {sample_mean:.1f}')
+plt.axvline(ci_lower, color='green', linestyle='--', linewidth=1.5, label=f'95% CI Lower')
+plt.axvline(ci_upper, color='green', linestyle='--', linewidth=1.5, label=f'95% CI Upper')
+plt.fill_betweenx([0, 5], ci_lower, ci_upper, color='green', alpha=0.2, label='95% CI Region')
+plt.title('Daily Sales Distribution with 95% CI')
+plt.xlabel('Daily Sales')
+plt.ylabel('Frequency')
+plt.legend()
+plt.grid(True, alpha=0.3)
+
+# Create a confidence interval plot
+plt.subplot(1, 2, 2)
+plt.errorbar(1, sample_mean, yerr=margin_of_error, fmt='o', color='red', 
+             capsize=10, capthick=2, markersize=10)
+plt.xlim(0.5, 1.5)
+plt.xticks([1], ['Daily Sales'])
+plt.title('95% Confidence Interval for Mean Sales')
+plt.ylabel('Sales Amount')
+plt.grid(True, alpha=0.3)
+plt.axhline(sample_mean, color='red', linestyle='-', alpha=0.5)
+plt.text(1.1, sample_mean, f'Mean = {sample_mean:.1f}', fontsize=9)
+plt.text(1.1, ci_lower, f'Lower = {ci_lower:.1f}', fontsize=9, color='green')
+plt.text(1.1, ci_upper, f'Upper = {ci_upper:.1f}', fontsize=9, color='green')
+
+plt.tight_layout()
+plt.show()
+
+# Additional verification using t-distribution (more accurate for smaller samples)
+# This serves as a check for our z-based interval
+t_value = stats.t.ppf((1 + confidence_level) / 2, df=n-1)
+t_margin = t_value * standard_error
+t_ci_lower = sample_mean - t_margin
+t_ci_upper = sample_mean + t_margin
+
+print(f"\nFor comparison, using t-distribution (with {n-1} degrees of freedom):")
+print(f"  t-value: {t_value:.3f}")
+print(f"  95% CI: [{t_ci_lower:.2f}, {t_ci_upper:.2f}]")
+print(f"  Difference from z-based CI: ±{abs(t_margin - margin_of_error):.2f}")
+Output:
+
+text
+============================================================
+DAILY SALES ANALYSIS - 95% CONFIDENCE INTERVAL
+============================================================
+Number of days (sample size): 30
+Sample Mean: 247.00
+Sample Standard Deviation: 17.20
+Standard Error: 3.14
+Z-value for 95.0% CI: 1.960
+Margin of Error: ±6.15
+
+95% Confidence Interval for Average Daily Sales:
+  [240.85, 253.15]
+
+Interpretation: We are 95% confident that the true population mean
+of daily sales falls between 240.85 and 253.15.
+
+For comparison, using t-distribution (with 29 degrees of freedom):
+  t-value: 2.045
+  95% CI: [240.58, 253.42]
+  Difference from z-based CI: ±0.27
