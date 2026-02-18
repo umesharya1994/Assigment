@@ -1,0 +1,557 @@
+ ("1. What is Object-Oriented Programming (OOP)?",
+     "Answer:\nObject-Oriented Programming (OOP) is a programming paradigm that organizes software design around objects rather than functions and logic. It combines data and behaviors (methods) into objects, which are instances of classes. OOP focuses on creating reusable code through concepts like encapsulation, inheritance, and polymorphism.\n\nMain principles of OOP:\n• Encapsulation: Bundling data and methods that operate on that data within a single unit\n• Inheritance: Creating new classes based on existing classes\n• Polymorphism: Objects of different types can respond to the same interface\n• Abstraction: Hiding complex implementation details"),
+    
+    ("2. What is a class in OOP?",
+     "Answer:\nA class is a blueprint or template for creating objects. It defines the attributes (data) and methods (behaviors) that objects of that class will have. A class doesn't occupy memory until objects are created from it.\n\nExample:\nclass Car:\n    def __init__(self, brand, model):\n        self.brand = brand\n        self.model = model\n    \n    def start(self):\n        print(f'{self.brand} {self.model} is starting')"),
+    
+    ("3. What is an object in OOP?",
+     "Answer:\nAn object is an instance of a class. It represents a specific entity with its own set of attribute values and can perform actions defined in its class. Objects occupy memory and have their own identity.\n\nExample:\nmy_car = Car('Toyota', 'Camry')  # Creating an object\nmy_car.start()  # Calling method on object"),
+    
+    ("4. What is the difference between abstraction and encapsulation?",
+     "Answer:\n• Abstraction: Hides complex implementation details and shows only essential features to the user. It focuses on what an object does rather than how it does it. Achieved through abstract classes and interfaces.\n\n• Encapsulation: Bundles data and methods together and restricts direct access to some components. It focuses on protecting data from unauthorized access. Achieved through private attributes and public methods.\n\nExample:\nAbstraction: A car's steering wheel (you know it turns the car, not how)\nEncapsulation: A car's engine (internal components hidden under the hood)"),
+    
+    ("5. What are dunder methods in Python?",
+     "Answer:\nDunder (double underscore) methods are special methods in Python that have double underscores at the beginning and end of their names. They are also called magic methods and allow classes to define behavior for built-in operations.\n\nCommon dunder methods:\n• __init__: Constructor, called when object is created\n• __str__: Returns string representation for users\n• __repr__: Returns string representation for developers\n• __len__: Defines behavior for len() function\n• __add__: Defines behavior for + operator\n• __call__: Makes object callable like a function"),
+    
+    ("6. Explain the concept of inheritance in OOP.",
+     "Answer:\nInheritance is a mechanism where a class (child/derived class) inherits attributes and methods from another class (parent/base class). It promotes code reuse and establishes a hierarchical relationship between classes.\n\nTypes of inheritance:\n• Single inheritance: One child inherits from one parent\n• Multiple inheritance: One child inherits from multiple parents\n• Multilevel inheritance: Grandparent → Parent → Child\n• Hierarchical inheritance: Multiple children inherit from one parent\n\nExample:\nclass Animal:\n    def breathe(self):\n        print('Breathing')\n\nclass Dog(Animal):  # Dog inherits from Animal\n    def bark(self):\n        print('Bark!')"),
+    
+    ("7. What is polymorphism in OOP?",
+     "Answer:\nPolymorphism means 'many forms'. It allows objects of different classes to respond to the same method call in their own way. In Python, polymorphism is achieved through method overriding and duck typing.\n\nExample:\nclass Bird:\n    def sound(self):\n        return 'Some sound'\n\nclass Sparrow(Bird):\n    def sound(self):\n        return 'Chirp'\n\nclass Crow(Bird):\n    def sound(self):\n        return 'Caw'\n\n# Both sparrow and crow respond to sound() differently"),
+    
+    ("8. How is encapsulation achieved in Python?",
+     "Answer:\nEncapsulation in Python is achieved using naming conventions and property decorators:\n\n• Public members: No underscore (accessible anywhere)\n• Protected members: Single underscore _ (convention for internal use)\n• Private members: Double underscore __ (name mangling)\n\nExample:\nclass BankAccount:\n    def __init__(self):\n        self.__balance = 0  # Private attribute\n    \n    def deposit(self, amount):\n        self.__balance += amount\n    \n    def get_balance(self):  # Public method to access private data\n        return self.__balance"),
+    
+    ("9. What is a constructor in Python?",
+     "Answer:\nA constructor is a special method (__init__) that is automatically called when an object is created. It initializes the object's attributes and performs any setup operations.\n\nFeatures:\n• Called once per object creation\n• Can accept parameters\n• Not mandatory (Python provides default constructor)\n\nExample:\nclass Person:\n    def __init__(self, name, age):  # Constructor\n        self.name = name\n        self.age = age"),
+    
+    ("10. What are class and static methods in Python?",
+     "Answer:\n• Class methods (@classmethod): Methods that work with the class itself rather than instances. They receive the class as the first parameter (cls). Used for factory methods or modifying class state.\n\n• Static methods (@staticmethod): Methods that don't receive self or cls. They behave like regular functions but belong to the class namespace. Used for utility functions related to the class.\n\nExample:\nclass Math:\n    @classmethod\n    def create_from_string(cls, string):\n        return cls(int(string))\n    \n    @staticmethod\n    def add(a, b):\n        return a + b"),
+    
+    ("11. What is method overloading in Python?",
+     "Answer:\nMethod overloading refers to defining multiple methods with the same name but different parameters. Python doesn't support traditional method overloading. Instead, it achieves similar functionality through default arguments, variable-length arguments (*args), or using multiple dispatch libraries.\n\nExample:\nclass Calculator:\n    def add(self, a, b, c=0):  # Using default arguments\n        return a + b + c"),
+    
+    ("12. What is method overriding in OOP?",
+     "Answer:\nMethod overriding occurs when a child class provides its own implementation of a method that is already defined in its parent class. The child's version overrides the parent's version.\n\nRequirements:\n• Same method name\n• Same parameters\n• Inheritance relationship\n\nExample:\nclass Animal:\n    def speak(self):\n        return 'Animal speaks'\n\nclass Dog(Animal):\n    def speak(self):  # Overriding parent method\n        return 'Dog barks'"),
+    
+    ("13. What is a property decorator in Python?",
+     "Answer:\nThe @property decorator allows you to define methods that can be accessed like attributes. It's used for creating getters, setters, and deleters, enabling controlled access to private attributes.\n\nExample:\nclass Circle:\n    def __init__(self, radius):\n        self._radius = radius\n    \n    @property\n    def radius(self):\n        return self._radius\n    \n    @radius.setter\n    def radius(self, value):\n        if value > 0:\n            self._radius = value\n    \n    @property\n    def area(self):\n        return 3.14 * self._radius ** 2"),
+    
+    ("14. Why is polymorphism important in OOP?",
+     "Answer:\nPolymorphism is important because:\n\n1. Code Reusability: Write code that works with objects of multiple types\n2. Flexibility: Add new classes without modifying existing code\n3. Maintainability: Reduce complex conditional logic\n4. Extensibility: Easily extend systems with new behaviors\n5. Interface Consistency: Objects share the same interface but behave differently\n\nExample: A function that processes any shape (circle, rectangle, triangle) without knowing the specific type"),
+    
+    ("15. What is an abstract class in Python?",
+     "Answer:\nAn abstract class is a class that cannot be instantiated and is meant to be inherited. It contains one or more abstract methods (methods declared but not implemented). Abstract classes define a common interface for all subclasses.\n\nImplementation requires ABC module:\nfrom abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        pass\n\nclass Circle(Shape):\n    def area(self):  # Must implement area()\n        return 3.14 * r ** 2"),
+    
+    ("16. What are the advantages of OOP?",
+     "Answer:\nAdvantages of OOP:\n\n1. Modularity: Code is organized into discrete classes\n2. Reusability: Classes can be reused across projects\n3. Encapsulation: Data hiding increases security\n4. Inheritance: Code reuse and hierarchical relationships\n5. Polymorphism: Flexibility in method implementation\n6. Maintainability: Easier to debug and update code\n7. Scalability: Better for large, complex applications\n8. Real-world modeling: Closer to how we think about problems"),
+    
+    ("17. What is the difference between a class variable and an instance variable?",
+     "Answer:\n• Class variables: Shared by all instances of a class. Defined directly in the class body. Changes affect all instances.\n\n• Instance variables: Unique to each instance. Defined inside methods (usually __init__) with self. Changes affect only that instance.\n\nExample:\nclass Employee:\n    company = 'ABC Corp'  # Class variable (shared)\n    \n    def __init__(self, name):\n        self.name = name  # Instance variable (unique)"),
+    
+    ("18. What is multiple inheritance in Python?",
+     "Answer:\nMultiple inheritance allows a class to inherit from multiple parent classes. Python supports multiple inheritance and uses Method Resolution Order (MRO) to determine which method to call when a method exists in multiple parents.\n\nExample:\nclass Flyer:\n    def fly(self):\n        print('Flying')\n\nclass Swimmer:\n    def swim(self):\n        print('Swimming')\n\nclass Duck(Flyer, Swimmer):  # Multiple inheritance\n    pass\n\n# Duck inherits from both Flyer and Swimmer"),
+    
+    ("19. Explain the purpose of '_str_' and '_repr_' methods in Python.",
+     "Answer:\n• __str__: Returns a readable, user-friendly string representation of the object. Called by str() and print().\n\n• __repr__: Returns an unambiguous string representation, mainly for developers. Called by repr() and in interactive console. Should ideally be able to recreate the object.\n\nExample:\nclass Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    \n    def __str__(self):\n        return f'Point({self.x}, {self.y})'\n    \n    def __repr__(self):\n        return f'Point(x={self.x}, y={self.y})'"),
+    
+    ("20. What is the significance of the 'super()' function in Python?",
+     "Answer:\nsuper() returns a temporary object of the parent class, allowing you to call parent class methods. It's used to:\n\n1. Call parent class constructor\n2. Access overridden methods\n3. Implement cooperative multiple inheritance\n\nExample:\nclass Child(Parent):\n    def __init__(self, name, age):\n        super().__init__(name)  # Call parent constructor\n        self.age = age\n    \n    def display(self):\n        super().display()  # Call parent method\n        print(f'Age: {self.age}')"),
+    
+    ("21. What is the significance of the __del__ method in Python?",
+     "Answer:\n__del__ is a destructor method called when an object is about to be destroyed (garbage collected). It's used for cleanup operations like closing files, releasing resources, or disconnecting from networks.\n\nImportant notes:\n• Not guaranteed to be called immediately when object goes out of scope\n• Python uses garbage collection, so __del__ may not be called at predictable times\n• Better to use context managers (with statement) for resource management\n\nExample:\nclass FileHandler:\n    def __init__(self, filename):\n        self.file = open(filename, 'r')\n    \n    def __del__(self):\n        self.file.close()  # Cleanup when object is destroyed"),
+    
+    ("22. What is the difference between @staticmethod and @classmethod in Python?",
+     "Answer:\n• @staticmethod:\n  - No self or cls parameter\n  - Cannot access class or instance variables\n  - Like a regular function but in class namespace\n  - Used for utility functions\n\n• @classmethod:\n  - Takes cls (class) as first parameter\n  - Can access and modify class state\n  - Can be used as factory methods\n  - Bound to class, not instance\n\nExample:\nclass Date:\n    def __init__(self, day, month, year):\n        self.day = day\n        self.month = month\n        self.year = year\n    \n    @classmethod\n    def from_string(cls, date_string):\n        day, month, year = map(int, date_string.split('-'))\n        return cls(day, month, year)\n    \n    @staticmethod\n    def is_valid_date(day, month, year):\n        return 1 <= day <= 31 and 1 <= month <= 12"),
+    
+    ("23. How does polymorphism work in Python with inheritance?",
+     "Answer:\nIn Python, polymorphism with inheritance works through method overriding. When a child class overrides a parent class method, the appropriate method is called based on the actual object type at runtime.\n\nExample:\nclass Animal:\n    def make_sound(self):\n        return 'Some sound'\n\nclass Dog(Animal):\n    def make_sound(self):\n        return 'Bark'\n\nclass Cat(Animal):\n    def make_sound(self):\n        return 'Meow'\n\n# Polymorphic function\ndef animal_sound(animal):\n    print(animal.make_sound())\n\n# Same interface, different behaviors\ndog = Dog()\ncat = Cat()\nanimal_sound(dog)  # Output: Bark\nanimal_sound(cat)  # Output: Meow"),
+    
+    ("24. What is method chaining in Python OOP?",
+     "Answer:\nMethod chaining is a technique where multiple methods are called on the same object in a single statement. Each method returns the object itself (self), allowing the next method to be called on the same object.\n\nExample:\nclass Calculator:\n    def __init__(self):\n        self.value = 0\n    \n    def add(self, x):\n        self.value += x\n        return self  # Return self for chaining\n    \n    def multiply(self, x):\n        self.value *= x\n        return self\n    \n    def get_value(self):\n        return self.value\n\n# Method chaining\ncalc = Calculator()\nresult = calc.add(5).multiply(2).add(10).get_value()\nprint(result)  # Output: 20"),
+    
+    ("25. What is the purpose of the __call__ method in Python?",
+     "Answer:\nThe __call__ method allows an object to be called like a function. When defined, the object becomes callable, and __call__ is executed when you use parentheses () on the object.\n\nUse cases:\n• Creating function-like objects that maintain state\n• Implementing decorators\n• Creating callable API endpoints\n\nExample:\nclass Multiplier:\n    def __init__(self, factor):\n        self.factor = factor\n    \n    def __call__(self, x):\n        return x * self.factor\n\n# Create callable object\ntimes_two = Multiplier(2)\nprint(times_two(5))  # Output: 10 (object called like function)\nprint(times_two(10)) # Output: 20")
+]
+
+for q, a in questions_answers:
+    pdf.question_answer(q, a)
+
+# Practical Questions (1-18)
+pdf.add_page()
+pdf.chapter_title("Practical Questions (1-18)")
+
+practical_code = '''# 1. Parent Animal and Child Dog class
+print("=" * 60)
+print("QUESTION 1: Animal and Dog Classes")
+print("=" * 60)
+
+class Animal:
+    def speak(self):
+        print("Animal makes a generic sound")
+
+class Dog(Animal):
+    def speak(self):
+        print("Bark!")
+
+# Test
+animal = Animal()
+dog = Dog()
+print("Animal speak:", end=" ")
+animal.speak()
+print("Dog speak:", end=" ")
+dog.speak()
+print()
+
+# 2. Abstract class Shape with Circle and Rectangle
+print("\\n" + "=" * 60)
+print("QUESTION 2: Abstract Shape Class with Circle and Rectangle")
+print("=" * 60)
+
+from abc import ABC, abstractmethod
+import math
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def area(self):
+        return math.pi * self.radius ** 2
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+
+# Test
+circle = Circle(5)
+rectangle = Rectangle(4, 6)
+print(f"Circle area (r=5): {circle.area():.2f}")
+print(f"Rectangle area (4x6): {rectangle.area()}")
+print()
+
+# 3. Multi-level inheritance: Vehicle → Car → ElectricCar
+print("\\n" + "=" * 60)
+print("QUESTION 3: Multi-level Inheritance - Vehicle, Car, ElectricCar")
+print("=" * 60)
+
+class Vehicle:
+    def __init__(self, vehicle_type):
+        self.vehicle_type = vehicle_type
+    
+    def display_type(self):
+        print(f"Vehicle type: {self.vehicle_type}")
+
+class Car(Vehicle):
+    def __init__(self, vehicle_type, brand, model):
+        super().__init__(vehicle_type)
+        self.brand = brand
+        self.model = model
+    
+    def display_info(self):
+        print(f"Car: {self.brand} {self.model}")
+
+class ElectricCar(Car):
+    def __init__(self, vehicle_type, brand, model, battery_capacity):
+        super().__init__(vehicle_type, brand, model)
+        self.battery_capacity = battery_capacity
+    
+    def display_info(self):
+        super().display_info()
+        print(f"Battery: {self.battery_capacity} kWh")
+
+# Test
+tesla = ElectricCar("Electric", "Tesla", "Model 3", 75)
+tesla.display_type()
+tesla.display_info()
+print()
+
+# 4. Polymorphism with Bird, Sparrow, Penguin
+print("\\n" + "=" * 60)
+print("QUESTION 4: Polymorphism - Bird, Sparrow, Penguin")
+print("=" * 60)
+
+class Bird:
+    def fly(self):
+        return "Some birds fly"
+
+class Sparrow(Bird):
+    def fly(self):
+        return "Sparrow flies high"
+
+class Penguin(Bird):
+    def fly(self):
+        return "Penguin cannot fly, swims instead"
+
+# Polymorphic function
+def demonstrate_flight(bird):
+    print(bird.fly())
+
+# Test
+birds = [Sparrow(), Penguin()]
+for bird in birds:
+    demonstrate_flight(bird)
+print()
+
+# 5. Encapsulation with BankAccount
+print("\\n" + "=" * 60)
+print("QUESTION 5: Encapsulation - BankAccount with Private Balance")
+print("=" * 60)
+
+class BankAccount:
+    def __init__(self, initial_balance=0):
+        self.__balance = initial_balance  # Private attribute
+    
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+            print(f"Deposited: ${amount}")
+        else:
+            print("Invalid deposit amount")
+    
+    def withdraw(self, amount):
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
+            print(f"Withdrawn: ${amount}")
+        else:
+            print("Insufficient funds or invalid amount")
+    
+    def get_balance(self):
+        return self.__balance
+
+# Test
+account = BankAccount(1000)
+account.deposit(500)
+account.withdraw(200)
+print(f"Current balance: ${account.get_balance()}")
+# print(account.__balance)  # This would cause AttributeError
+print()
+
+# 6. Runtime polymorphism with Instrument
+print("\\n" + "=" * 60)
+print("QUESTION 6: Runtime Polymorphism - Instrument, Guitar, Piano")
+print("=" * 60)
+
+class Instrument:
+    def play(self):
+        return "Instrument is playing"
+
+class Guitar(Instrument):
+    def play(self):
+        return "Guitar: Strum strum!"
+
+class Piano(Instrument):
+    def play(self):
+        return "Piano: Plink plonk!"
+
+# Runtime polymorphism
+def perform(instrument):
+    print(instrument.play())
+
+# Test
+instruments = [Guitar(), Piano()]
+for instrument in instruments:
+    perform(instrument)
+print()
+
+# 7. Class method and static method in MathOperations
+print("\\n" + "=" * 60)
+print("QUESTION 7: Class Method and Static Method - MathOperations")
+print("=" * 60)
+
+class MathOperations:
+    @classmethod
+    def add_numbers(cls, a, b):
+        print(f"Class: {cls.__name__}")
+        return a + b
+    
+    @staticmethod
+    def subtract_numbers(a, b):
+        return a - b
+
+# Test
+print(f"Add (class method): {MathOperations.add_numbers(10, 5)}")
+print(f"Subtract (static method): {MathOperations.subtract_numbers(10, 5)}")
+print()
+
+# 8. Person class with class method to count instances
+print("\\n" + "=" * 60)
+print("QUESTION 8: Person Class with Instance Counter")
+print("=" * 60)
+
+class Person:
+    person_count = 0  # Class variable
+    
+    def __init__(self, name):
+        self.name = name
+        Person.person_count += 1
+    
+    @classmethod
+    def total_persons(cls):
+        return f"Total persons created: {cls.person_count}"
+
+# Test
+p1 = Person("Alice")
+p2 = Person("Bob")
+p3 = Person("Charlie")
+print(Person.total_persons())
+print()
+
+# 9. Fraction class with __str__ override
+print("\\n" + "=" * 60)
+print("QUESTION 9: Fraction Class with __str__ Override")
+print("=" * 60)
+
+class Fraction:
+    def __init__(self, numerator, denominator):
+        self.numerator = numerator
+        self.denominator = denominator
+    
+    def __str__(self):
+        return f"{self.numerator}/{self.denominator}"
+    
+    def __repr__(self):
+        return f"Fraction({self.numerator}, {self.denominator})"
+
+# Test
+frac = Fraction(3, 4)
+print(f"Fraction: {frac}")
+print(f"Repr: {repr(frac)}")
+print()
+
+# 10. Vector class with operator overloading (__add__)
+print("\\n" + "=" * 60)
+print("QUESTION 10: Vector Class with __add__ Override")
+print("=" * 60)
+
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __add__(self, other):
+        if isinstance(other, Vector):
+            return Vector(self.x + other.x, self.y + other.y)
+        return NotImplemented
+    
+    def __str__(self):
+        return f"Vector({self.x}, {self.y})"
+
+# Test
+v1 = Vector(2, 3)
+v2 = Vector(4, 5)
+v3 = v1 + v2
+print(f"v1 = {v1}")
+print(f"v2 = {v2}")
+print(f"v1 + v2 = {v3}")
+print()
+
+# 11. Person class with greet method
+print("\\n" + "=" * 60)
+print("QUESTION 11: Person Class with Greet Method")
+print("=" * 60)
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def greet(self):
+        print(f"Hello, my name is {self.name} and I am {self.age} years old.")
+
+# Test
+person = Person("John", 30)
+person.greet()
+print()
+
+# 12. Student class with average_grade method
+print("\\n" + "=" * 60)
+print("QUESTION 12: Student Class with Average Grade Calculator")
+print("=" * 60)
+
+class Student:
+    def __init__(self, name, grades=None):
+        self.name = name
+        self.grades = grades if grades else []
+    
+    def add_grade(self, grade):
+        self.grades.append(grade)
+    
+    def average_grade(self):
+        if not self.grades:
+            return 0
+        return sum(self.grades) / len(self.grades)
+
+# Test
+student = Student("Alice", [85, 90, 78, 92])
+print(f"{student.name}'s grades: {student.grades}")
+print(f"Average grade: {student.average_grade():.2f}")
+student.add_grade(88)
+print(f"After adding 88: {student.grades}")
+print(f"New average: {student.average_grade():.2f}")
+print()
+
+# 13. Rectangle class with set_dimensions and area
+print("\\n" + "=" * 60)
+print("QUESTION 13: Rectangle Class with Dimensions and Area")
+print("=" * 60)
+
+class Rectangle:
+    def __init__(self, width=0, height=0):
+        self.width = width
+        self.height = height
+    
+    def set_dimensions(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+
+# Test
+rect = Rectangle()
+rect.set_dimensions(5, 8)
+print(f"Rectangle {rect.width}x{rect.height}")
+print(f"Area: {rect.area()}")
+print()
+
+# 14. Employee and Manager classes with salary calculation
+print("\\n" + "=" * 60)
+print("QUESTION 14: Employee and Manager Classes with Salary Calculation")
+print("=" * 60)
+
+class Employee:
+    def __init__(self, name, hourly_rate):
+        self.name = name
+        self.hourly_rate = hourly_rate
+    
+    def calculate_salary(self, hours_worked):
+        return self.hourly_rate * hours_worked
+
+class Manager(Employee):
+    def __init__(self, name, hourly_rate, bonus):
+        super().__init__(name, hourly_rate)
+        self.bonus = bonus
+    
+    def calculate_salary(self, hours_worked):
+        base_salary = super().calculate_salary(hours_worked)
+        return base_salary + self.bonus
+
+# Test
+emp = Employee("Bob", 25)
+mgr = Manager("Sarah", 40, 500)
+
+print(f"Employee {emp.name}: ${emp.calculate_salary(160)}")
+print(f"Manager {mgr.name}: ${mgr.calculate_salary(160)}")
+print()
+
+# 15. Product class with total_price method
+print("\\n" + "=" * 60)
+print("QUESTION 15: Product Class with Total Price Calculator")
+print("=" * 60)
+
+class Product:
+    def __init__(self, name, price, quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+    
+    def total_price(self):
+        return self.price * self.quantity
+
+# Test
+product = Product("Laptop", 999.99, 3)
+print(f"Product: {product.name}")
+print(f"Price per unit: ${product.price}")
+print(f"Quantity: {product.quantity}")
+print(f"Total price: ${product.total_price():.2f}")
+print()
+
+# 16. Animal abstract class with Cow and Sheep implementations
+print("\\n" + "=" * 60)
+print("QUESTION 16: Abstract Animal Class with Cow and Sheep")
+print("=" * 60)
+
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod
+    def sound(self):
+        pass
+
+class Cow(Animal):
+    def sound(self):
+        return "Moo!"
+
+class Sheep(Animal):
+    def sound(self):
+        return "Baa!"
+
+# Test
+cow = Cow()
+sheep = Sheep()
+print(f"Cow says: {cow.sound()}")
+print(f"Sheep says: {sheep.sound()}")
+print()
+
+# 17. Book class with get_book_info method
+print("\\n" + "=" * 60)
+print("QUESTION 17: Book Class with Formatted Info")
+print("=" * 60)
+
+class Book:
+    def __init__(self, title, author, year_published):
+        self.title = title
+        self.author = author
+        self.year_published = year_published
+    
+    def get_book_info(self):
+        return f"'{self.title}' by {self.author} ({self.year_published})"
+
+# Test
+book = Book("1984", "George Orwell", 1949)
+print(book.get_book_info())
+print()
+
+# 18. House and Mansion classes
+print("\\n" + "=" * 60)
+print("QUESTION 18: House and Mansion Classes")
+print("=" * 60)
+
+class House:
+    def __init__(self, address, price):
+        self.address = address
+        self.price = price
+    
+    def display_info(self):
+        print(f"House at {self.address}, Price: ${self.price:,}")
+
+class Mansion(House):
+    def __init__(self, address, price, number_of_rooms):
+        super().__init__(address, price)
+        self.number_of_rooms = number_of_rooms
+    
+    def display_info(self):
+        super().display_info()
+        print(f"Number of rooms: {self.number_of_rooms}")
+
+# Test
+house = House("123 Main St", 250000)
+mansion = Mansion("1 Billionaire Row", 5000000, 12)
+
+print("Regular House:")
+house.display_info()
+print("\\nMansion:")
+mansion.display_info()
+
+print("\\n" + "=" * 60)
+print("END OF ALL SOLUTIONS")
+print("=" * 60)
