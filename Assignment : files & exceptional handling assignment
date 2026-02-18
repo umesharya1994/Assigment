@@ -1,0 +1,641 @@
+ ("1. What is the difference between interpreted and compiled languages?",
+     "Answer:\n• Compiled Languages: Source code is translated into machine code before execution by a compiler. The resulting executable can run independently. Examples: C, C++, Java.\n   Advantages: Faster execution, optimized code, errors caught at compile time.\n\n• Interpreted Languages: Source code is executed line by line by an interpreter at runtime. No separate compilation step. Examples: Python, JavaScript, Ruby.\n   Advantages: Platform independence, easier debugging, dynamic typing, faster development.\n\nPython is both compiled (to bytecode) and interpreted (bytecode executed by Python VM)."),
+    
+    ("2. What is exception handling in Python?",
+     "Answer:\nException handling is a mechanism to handle runtime errors gracefully without crashing the program. It allows programmers to catch and respond to exceptions that occur during program execution.\n\nKey components:\n• try: Block of code to monitor for exceptions\n• except: Block that handles specific exceptions\n• else: Executes if no exception occurs\n• finally: Always executes regardless of exceptions\n\nExample:\ntry:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    print('Cannot divide by zero!')"),
+    
+    ("3. What is the purpose of the finally block in exception handling?",
+     "Answer:\nThe finally block is used to execute code regardless of whether an exception occurred or not. It's typically used for cleanup operations like closing files, releasing resources, or disconnecting from databases.\n\nKey features:\n• Always executes, even if there's a return in try/except\n• Executes after try/except/else blocks\n• Useful for resource management\n\nExample:\ntry:\n    file = open('file.txt', 'r')\n    # Process file\nfinally:\n    file.close()  # Always closes the file"),
+    
+    ("4. What is logging in Python?",
+     "Answer:\nLogging is the process of recording events, errors, and informational messages during program execution. Python's logging module provides a flexible framework for emitting log messages from applications.\n\nBenefits:\n• Track program execution flow\n• Debug issues in production\n• Monitor application health\n• Record errors with context\n• Different log levels for different purposes"),
+    
+    ("5. What is the significance of the __del__ method in Python?",
+     "Answer:\n__del__ is a destructor method called when an object is about to be destroyed (garbage collected). It's used for cleanup operations like closing files, releasing network connections, or freeing resources.\n\nImportant notes:\n• Not guaranteed to be called immediately\n• Python uses garbage collection, so timing is unpredictable\n• Better to use context managers (with) for resource management\n\nExample:\nclass FileHandler:\n    def __del__(self):\n        print('Object destroyed, cleaning up')"),
+    
+    ("6. What is the difference between import and from ... import in Python?",
+     "Answer:\n• import module: Imports the entire module. You need to use module.function() syntax.\n   import math\n   print(math.sqrt(25))\n\n• from module import item: Imports specific items directly into namespace. You can use them directly.\n   from math import sqrt\n   print(sqrt(25))\n\n• from module import *: Imports all items (not recommended due to namespace pollution)"),
+    
+    ("7. How can you handle multiple exceptions in Python?",
+     "Answer:\nMultiple exceptions can be handled in several ways:\n\n1. Multiple except blocks:\n   try:\n       # code\n   except ValueError:\n       # handle ValueError\n   except ZeroDivisionError:\n       # handle ZeroDivisionError\n\n2. Tuple of exceptions:\n   try:\n       # code\n   except (ValueError, TypeError) as e:\n       # handle both exceptions\n\n3. Base exception:\n   try:\n       # code\n   except Exception as e:\n       # handle any exception"),
+    
+    ("8. What is the purpose of the with statement when handling files in Python?",
+     "Answer:\nThe with statement (context manager) ensures proper acquisition and release of resources. When used with files, it automatically closes the file, even if exceptions occur.\n\nAdvantages:\n• Automatic resource management\n• Cleaner code\n• Ensures file is properly closed\n• Reduces boilerplate code\n\nExample:\nwith open('file.txt', 'r') as file:\n    content = file.read()\n# File automatically closed here"),
+    
+    ("9. What is the difference between multithreading and multiprocessing?",
+     "Answer:\n• Multithreading: Multiple threads within a single process sharing memory space.\n   - Lightweight, faster context switching\n   - Affected by GIL (Global Interpreter Lock) in Python\n   - Best for I/O-bound tasks\n\n• Multiprocessing: Multiple processes with separate memory spaces.\n   - Heavier, slower process creation\n   - Bypasses GIL, true parallelism\n   - Best for CPU-bound tasks\n\nUse threading for I/O, multiprocessing for CPU-intensive operations."),
+    
+    ("10. What are the advantages of using logging in a program?",
+     "Answer:\nAdvantages of logging:\n\n1. Debugging: Track program flow and variable values\n2. Monitoring: Observe application health in production\n3. Auditing: Record user actions and system events\n4. Troubleshooting: Identify root causes of issues\n5. Performance analysis: Measure execution times\n6. Error tracking: Capture exceptions with context\n7. Configurable: Different levels for different environments\n8. Persistent: Logs can be stored for later analysis"),
+    
+    ("11. What is memory management in Python?",
+     "Answer:\nMemory management in Python involves:\n\n1. Private heap: All Python objects and data structures stored in private heap\n2. Memory manager: Handles allocation/deallocation of heap space\n3. Garbage collector: Automatically frees memory from unused objects\n4. Reference counting: Tracks number of references to each object\n5. Generational GC: Optimizes garbage collection by generations\n\nPython manages memory automatically, but understanding helps optimize performance."),
+    
+    ("12. What are the basic steps involved in exception handling in Python?",
+     "Answer:\nBasic steps for exception handling:\n\n1. try: Wrap code that might raise an exception\n2. except: Catch and handle specific exceptions\n3. else: (Optional) Execute if no exception occurred\n4. finally: (Optional) Always execute for cleanup\n\nExample:\ntry:\n    # Risky code\n    result = x / y\nexcept ZeroDivisionError:\n    # Handle specific error\n    print('Cannot divide by zero')\nexcept Exception as e:\n    # Handle other errors\n    print(f'Error: {e}')\nelse:\n    # No exception occurred\n    print(f'Result: {result}')\nfinally:\n    # Always executed\n    print('Operation complete')"),
+    
+    ("13. Why is memory management important in Python?",
+     "Answer:\nMemory management is important because:\n\n1. Performance: Efficient memory use improves speed\n2. Stability: Prevents memory leaks and crashes\n3. Scalability: Allows handling larger datasets\n4. Resource utilization: Optimal use of system resources\n5. Cost: Cloud services charge for memory usage\n6. Reliability: Prevents out-of-memory errors\n7. Responsiveness: Affects application responsiveness\n8. Concurrent users: More users can be served with efficient memory"),
+    
+    ("14. What is the role of try and except in exception handling?",
+     "Answer:\n• try: Defines a block of code to be monitored for exceptions. When an exception occurs, normal execution stops and control passes to except block.\n\n• except: Catches and handles exceptions raised in the try block. Can specify particular exception types or catch all exceptions.\n\nExample:\ntry:\n    num = int(input('Enter number: '))\n    result = 100 / num\nexcept ValueError:\n    print('Invalid number')\nexcept ZeroDivisionError:\n    print('Cannot divide by zero')"),
+    
+    ("15. How does Python's garbage collection system work?",
+     "Answer:\nPython uses two main mechanisms:\n\n1. Reference Counting:\n   - Each object maintains count of references\n   - When count reaches 0, memory is freed immediately\n\n2. Generational Garbage Collection:\n   - Objects divided into generations (0, 1, 2)\n   - New objects in generation 0\n   - Surviving objects promoted to higher generations\n   - Older generations collected less frequently\n   - Detects and cleans reference cycles\n\nPython's gc module provides interface to garbage collector."),
+    
+    ("16. What is the purpose of the else block in exception handling?",
+     "Answer:\nThe else block in exception handling executes only if no exception occurs in the try block. It's useful for code that should run only when the try block succeeds.\n\nBenefits:\n• Separates success code from error handling\n• Prevents accidentally catching exceptions from success code\n• Makes code more readable\n\nExample:\ntry:\n    file = open('data.txt', 'r')\nexcept FileNotFoundError:\n    print('File not found')\nelse:\n    content = file.read()  # Only runs if file opened\n    print(content)\n    file.close()"),
+    
+    ("17. What are the common logging levels in Python?",
+     "Answer:\nLogging levels (in increasing severity):\n\n1. DEBUG (10): Detailed information for debugging\n2. INFO (20): Confirmation that things are working\n3. WARNING (30): Something unexpected but正常运行\n4. ERROR (40): Serious problem, function failed\n5. CRITICAL (50): Program may not continue\n\nExample:\nimport logging\nlogging.debug('Debug message')\nlogging.info('Info message')\nlogging.warning('Warning message')\nlogging.error('Error message')\nlogging.critical('Critical message')"),
+    
+    ("18. What is the difference between os.fork() and multiprocessing in Python?",
+     "Answer:\n• os.fork(): Unix/Linux only, creates child process by copying parent. Low-level, platform-specific.\n   pid = os.fork()\n   if pid == 0:\n       # Child process\n   else:\n       # Parent process\n\n• multiprocessing: Cross-platform, high-level interface. Creates processes with cleaner API, better portability.\n   from multiprocessing import Process\n   p = Process(target=func)\n   p.start()\n\nmultiprocessing is preferred for Python applications."),
+    
+    ("19. What is the importance of closing a file in Python?",
+     "Answer:\nClosing files is important because:\n\n1. Frees system resources (file descriptors)\n2. Ensures all data is written to disk (buffer flushing)\n3. Prevents file corruption\n4. Allows other processes to access the file\n5. Releases memory locks\n6. Good practice for resource management\n\nAlways use with statement or finally block to ensure files are closed."),
+    
+    ("20. What is the difference between file.read() and file.readline() in Python?",
+     "Answer:\n• file.read(): Reads entire file content as a single string. Optional size parameter limits bytes read.\n   content = file.read()  # Whole file\n   partial = file.read(100)  # First 100 bytes\n\n• file.readline(): Reads one line at a time (including newline). Returns empty string at EOF.\n   line = file.readline()  # Read single line\n\nUse read() for small files, readline() for line-by-line processing of large files."),
+    
+    ("21. What is the logging module in Python used for?",
+     "Answer:\nThe logging module provides a flexible framework for emitting log messages from Python programs. It's used for:\n\n1. Recording application events\n2. Debugging and troubleshooting\n3. Monitoring application health\n4. Auditing user actions\n5. Performance analysis\n6. Error tracking and reporting\n\nFeatures:\n• Multiple log levels\n• Custom formatters\n• Multiple handlers (file, console, network)\n• Log rotation\n• Hierarchical loggers"),
+    
+    ("22. What is the os module in Python used for in file handling?",
+     "Answer:\nThe os module provides operating system-dependent functionality for file handling:\n\nCommon file operations:\n• os.path.exists(path): Check if file exists\n• os.remove(path): Delete file\n• os.rename(src, dst): Rename file\n• os.path.getsize(path): Get file size\n• os.listdir(path): List directory contents\n• os.mkdir(path): Create directory\n• os.path.join(): Join path components\n\nExample:\nimport os\nif os.path.exists('file.txt'):\n    os.remove('file.txt')"),
+    
+    ("23. What are the challenges associated with memory management in Python?",
+     "Answer:\nChallenges include:\n\n1. Memory leaks: Unreferenced objects with cycles\n2. GIL limitations: Affects threading memory efficiency\n3. Large object overhead: Python objects have overhead\n4. Reference cycles: Objects referencing each other\n5. Fragmentation: Memory can become fragmented\n6. Predictability: GC timing is unpredictable\n7. Memory bloat: Inefficient data structures\n8. Cache performance: Object overhead affects cache\n9. Debugging: Memory issues hard to debug\n10. Platform differences: Behavior varies across platforms"),
+    
+    ("24. How do you raise an exception manually in Python?",
+     "Answer:\nUse the raise statement to manually raise exceptions:\n\nSyntax:\nraise ExceptionType('Error message')\n\nExamples:\n# Raise built-in exception\nraise ValueError('Invalid value')\n\n# Raise custom exception\nclass MyError(Exception):\n    pass\nraise MyError('Custom error')\n\n# Re-raise current exception\ntry:\n    # code\nexcept:\n    # handle\n    raise  # Re-raise"),
+    
+    ("25. Why is it important to use multithreading in certain applications?",
+     "Answer:\nMultithreading is important for:\n\n1. Responsiveness: Keep UI responsive during long operations\n2. I/O-bound tasks: Handle multiple I/O operations concurrently\n3. Parallel processing: Utilize multiple CPU cores\n4. Performance: Improve throughput for certain workloads\n5. Resource sharing: Threads share memory efficiently\n6. Real-time processing: Handle concurrent events\n7. Server applications: Handle multiple client requests\n8. Web scraping: Fetch multiple pages simultaneously\n9. Database operations: Execute concurrent queries\n10. Background tasks: Perform tasks without blocking main thread")]
+
+# 1. Open file for writing and write a string
+print("\\n" + "="*70)
+print("Q1: Open file for writing and write a string")
+print("="*70)
+
+def write_to_file(filename, content):
+    try:
+        with open(filename, 'w') as file:
+            file.write(content)
+        print(f"Successfully wrote to {filename}")
+    except Exception as e:
+        print(f"Error writing to file: {e}")
+
+write_to_file('sample.txt', 'Hello, this is a test string!')
+
+# 2. Read file contents and print each line
+print("\\n" + "="*70)
+print("Q2: Read file contents and print each line")
+print("="*70)
+
+def read_and_print(filename):
+    try:
+        with open(filename, 'r') as file:
+            line_number = 1
+            for line in file:
+                print(f"Line {line_number}: {line.strip()}")
+                line_number += 1
+    except FileNotFoundError:
+        print(f"File {filename} not found")
+    except Exception as e:
+        print(f"Error reading file: {e}")
+
+read_and_print('sample.txt')
+
+# 3. Handle case where file doesn't exist
+print("\\n" + "="*70)
+print("Q3: Handle non-existent file")
+print("="*70)
+
+def safe_file_read(filename):
+    try:
+        with open(filename, 'r') as file:
+            return file.read()
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' does not exist")
+        return None
+    except PermissionError:
+        print(f"Error: No permission to read '{filename}'")
+        return None
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return None
+
+content = safe_file_read('nonexistent.txt')
+print(f"Content returned: {content}")
+
+# 4. Read from one file and write to another
+print("\\n" + "="*70)
+print("Q4: Copy content from one file to another")
+print("="*70)
+
+def copy_file(source, destination):
+    try:
+        with open(source, 'r') as src, open(destination, 'w') as dst:
+            content = src.read()
+            dst.write(content)
+        print(f"Successfully copied '{source}' to '{destination}'")
+        print(f"Copied {len(content)} characters")
+    except FileNotFoundError:
+        print(f"Error: Source file '{source}' not found")
+    except Exception as e:
+        print(f"Error during copy: {e}")
+
+copy_file('sample.txt', 'copy.txt')
+
+# 5. Catch and handle division by zero error
+print("\\n" + "="*70)
+print("Q5: Handle division by zero")
+print("="*70)
+
+def safe_division(a, b):
+    try:
+        result = a / b
+        print(f"{a} / {b} = {result}")
+        return result
+    except ZeroDivisionError:
+        print(f"Error: Cannot divide {a} by zero")
+        return None
+    except TypeError:
+        print("Error: Invalid types for division")
+        return None
+
+safe_division(10, 2)
+safe_division(10, 0)
+safe_division(10, '2')
+
+# 6. Log error message when division by zero occurs
+print("\\n" + "="*70)
+print("Q6: Log division by zero errors")
+print("="*70)
+
+# Setup logging
+logging.basicConfig(
+    filename='error.log',
+    level=logging.ERROR,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+def divide_with_logging(a, b):
+    try:
+        result = a / b
+        print(f"Result: {result}")
+        return result
+    except ZeroDivisionError:
+        error_msg = f"Division by zero attempted: {a} / {b}"
+        logging.error(error_msg)
+        print(f"Error logged: {error_msg}")
+        return None
+
+divide_with_logging(10, 0)
+
+# 7. Log at different levels (INFO, ERROR, WARNING)
+print("\\n" + "="*70)
+print("Q7: Logging at different levels")
+print("="*70)
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('app.log'),
+        logging.StreamHandler()
+    ]
+)
+
+def demonstrate_logging():
+    logging.debug("This is a DEBUG message - detailed troubleshooting")
+    logging.info("This is an INFO message - normal operation")
+    logging.warning("This is a WARNING message - potential issue")
+    logging.error("This is an ERROR message - operation failed")
+    logging.critical("This is a CRITICAL message - system may crash")
+
+demonstrate_logging()
+
+# 8. Handle file opening error using exception handling
+print("\\n" + "="*70)
+print("Q8: Handle file opening errors")
+print("="*70)
+
+def safe_file_open(filename, mode='r'):
+    try:
+        file = open(filename, mode)
+        print(f"Successfully opened '{filename}' in mode '{mode}'")
+        return file
+    except FileNotFoundError:
+        print(f"Cannot open '{filename}' - File not found")
+    except PermissionError:
+        print(f"Cannot open '{filename}' - Permission denied")
+    except IsADirectoryError:
+        print(f"Cannot open '{filename}' - It's a directory")
+    except Exception as e:
+        print(f"Unexpected error opening file: {e}")
+    return None
+
+file = safe_file_open('nonexistent.txt', 'r')
+if file:
+    file.close()
+
+# 9. Read file line by line and store in list
+print("\\n" + "="*70)
+print("Q9: Read file line by line into list")
+print("="*70)
+
+def file_to_list(filename):
+    lines = []
+    try:
+        with open(filename, 'r') as file:
+            lines = [line.strip() for line in file]
+        print(f"Read {len(lines)} lines from '{filename}'")
+    except FileNotFoundError:
+        print(f"File '{filename}' not found")
+    except Exception as e:
+        print(f"Error reading file: {e}")
+    return lines
+
+lines = file_to_list('sample.txt')
+for i, line in enumerate(lines, 1):
+    print(f"Line {i}: {line}")
+
+# 10. Append data to an existing file
+print("\\n" + "="*70)
+print("Q10: Append data to file")
+print("="*70)
+
+def append_to_file(filename, data):
+    try:
+        with open(filename, 'a') as file:
+            file.write(data + '\\n')
+        print(f"Successfully appended to '{filename}'")
+        
+        # Show file content after append
+        with open(filename, 'r') as file:
+            print("\\nCurrent file content:")
+            print(file.read())
+    except Exception as e:
+        print(f"Error appending to file: {e}")
+
+append_to_file('sample.txt', 'This line was appended!')
+
+# 11. Handle dictionary key error
+print("\\n" + "="*70)
+print("Q11: Handle missing dictionary key")
+print("="*70)
+
+def safe_dict_access(dictionary, key):
+    try:
+        value = dictionary[key]
+        print(f"Value for key '{key}': {value}")
+        return value
+    except KeyError:
+        print(f"KeyError: '{key}' not found in dictionary")
+        return None
+    except TypeError:
+        print(f"TypeError: Invalid key type")
+        return None
+
+my_dict = {'name': 'Alice', 'age': 30, 'city': 'New York'}
+safe_dict_access(my_dict, 'name')
+safe_dict_access(my_dict, 'country')
+
+# 12. Multiple except blocks for different exceptions
+print("\\n" + "="*70)
+print("Q12: Multiple except blocks")
+print("="*70)
+
+def multiple_except_handling():
+    test_cases = [
+        ('10 / 0', lambda: 10 / 0),
+        ('int("abc")', lambda: int("abc")),
+        ('[1,2,3][10]', lambda: [1,2,3][10]),
+        ('{"a":1}["b"]', lambda: {"a":1}["b"]),
+    ]
+    
+    for description, func in test_cases:
+        print(f"\\nTesting: {description}")
+        try:
+            func()
+        except ZeroDivisionError:
+            print("Caught ZeroDivisionError")
+        except ValueError:
+            print("Caught ValueError")
+        except IndexError:
+            print("Caught IndexError")
+        except KeyError:
+            print("Caught KeyError")
+        except Exception as e:
+            print(f"Caught generic exception: {type(e).__name__}")
+
+multiple_except_handling()
+
+# 13. Check if file exists before reading
+print("\\n" + "="*70)
+print("Q13: Check file existence before reading")
+print("="*70)
+
+def safe_read_with_check(filename):
+    if os.path.exists(filename):
+        print(f"File '{filename}' exists")
+        if os.path.getsize(filename) > 0:
+            try:
+                with open(filename, 'r') as file:
+                    content = file.read()
+                print(f"File content: {content[:100]}...")
+                return content
+            except Exception as e:
+                print(f"Error reading file: {e}")
+        else:
+            print(f"File '{filename}' is empty")
+    else:
+        print(f"File '{filename}' does not exist")
+    return None
+
+safe_read_with_check('sample.txt')
+safe_read_with_check('nonexistent.txt')
+
+# 14. Log both informational and error messages
+print("\\n" + "="*70)
+print("Q14: Log info and error messages")
+print("="*70)
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('application.log'),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
+def process_data(data):
+    logger.info(f"Starting to process data: {data}")
+    try:
+        if not data:
+            logger.warning("Empty data received")
+            return None
+        
+        result = len(data)
+        logger.info(f"Successfully processed data, length: {result}")
+        return result
+    except Exception as e:
+        logger.error(f"Error processing data: {e}", exc_info=True)
+        return None
+
+process_data("test")
+process_data("")
+process_data(None)
+
+# 15. Handle empty file
+print("\\n" + "="*70)
+print("Q15: Handle empty file")
+print("="*70)
+
+def read_non_empty_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            content = file.read()
+            if not content:
+                print(f"Warning: File '{filename}' is empty")
+                return ""
+            else:
+                print(f"File content ({len(content)} bytes):")
+                print(content)
+                return content
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found")
+    except Exception as e:
+        print(f"Error reading file: {e}")
+
+# Create empty file
+with open('empty.txt', 'w') as f:
+    pass
+
+read_non_empty_file('empty.txt')
+
+# 16. Memory profiling example
+print("\\n" + "="*70)
+print("Q16: Memory profiling")
+print("="*70)
+
+@profile
+def memory_intensive_function():
+    # Create large list
+    large_list = [i for i in range(1000000)]
+    print(f"Created list with {len(large_list)} elements")
+    
+    # Create large dictionary
+    large_dict = {i: i**2 for i in range(100000)}
+    print(f"Created dict with {len(large_dict)} elements")
+    
+    return len(large_list) + len(large_dict)
+
+# Note: Memory profiling requires: pip install memory-profiler
+print("Memory profiling would show usage here")
+print("Run with: python -m memory_profiler this_script.py")
+
+# 17. Write list of numbers to file, one per line
+print("\\n" + "="*70)
+print("Q17: Write numbers to file, one per line")
+print("="*70)
+
+def write_numbers_to_file(filename, numbers):
+    try:
+        with open(filename, 'w') as file:
+            for num in numbers:
+                file.write(f"{num}\\n")
+        print(f"Successfully wrote {len(numbers)} numbers to '{filename}'")
+        
+        # Verify by reading back
+        with open(filename, 'r') as file:
+            content = file.read()
+            print("File content:")
+            print(content)
+    except Exception as e:
+        print(f"Error writing numbers: {e}")
+
+numbers = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+write_numbers_to_file('numbers.txt', numbers)
+
+# 18. Logging with rotation after 1MB
+print("\\n" + "="*70)
+print("Q18: Logging with rotation (1MB)")
+print("="*70)
+
+def setup_rotating_logging():
+    # Create rotating file handler
+    handler = RotatingFileHandler(
+        'rotating.log',
+        maxBytes=1024,  # 1KB for demonstration (use 1MB=1048576 in production)
+        backupCount=3
+    )
+    
+    # Create formatter
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+    handler.setFormatter(formatter)
+    
+    # Get logger and add handler
+    logger = logging.getLogger('rotating_logger')
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
+    
+    # Write many logs to trigger rotation
+    for i in range(100):
+        logger.info(f"Log message number {i}")
+        logger.debug(f"Debug data: {i}")
+        logger.warning(f"Warning at iteration {i}")
+    
+    print("Rotating logging configured and tested")
+    print(f"Check rotating.log, rotating.log.1, etc.")
+
+setup_rotating_logging()
+
+# 19. Handle IndexError and KeyError
+print("\\n" + "="*70)
+print("Q19: Handle IndexError and KeyError")
+print("="*70)
+
+def handle_collection_errors():
+    test_data = [
+        ('list', [1, 2, 3], 5),
+        ('dict', {'a': 1, 'b': 2}, 'c'),
+        ('list', [1, 2, 3], 'invalid'),
+        ('dict', {'a': 1, 'b': 2}, 5),
+    ]
+    
+    for data_type, collection, key in test_data:
+        print(f"\\nAccessing {data_type} with {key}:")
+        try:
+            if data_type == 'list':
+                if isinstance(key, int):
+                    value = collection[key]
+                else:
+                    raise TypeError(f"List indices must be integers, not {type(key).__name__}")
+            else:  # dict
+                value = collection[key]
+            print(f"Value: {value}")
+        except IndexError:
+            print(f"IndexError: List index {key} out of range")
+        except KeyError:
+            print(f"KeyError: Key '{key}' not found in dictionary")
+        except TypeError as e:
+            print(f"TypeError: {e}")
+        except Exception as e:
+            print(f"Other error: {e}")
+
+handle_collection_errors()
+
+# 20. Open file with context manager
+print("\\n" + "="*70)
+print("Q20: Use context manager to open file")
+print("="*70)
+
+def context_manager_demo(filename):
+    try:
+        # with statement automatically closes file
+        with open(filename, 'r') as file:
+            content = file.read()
+            print(f"File opened with context manager")
+            print(f"Content: {content}")
+            # No need to explicitly close - with handles it
+    except FileNotFoundError:
+        print(f"File '{filename}' not found")
+    except Exception as e:
+        print(f"Error: {e}")
+    
+    # Check if file is closed automatically
+    try:
+        print("Checking if file is closed...")
+        # Can't check directly, but we know with statement closed it
+        print("File was automatically closed by context manager")
+    except:
+        pass
+
+context_manager_demo('sample.txt')
+
+# 21. Count occurrences of specific word in file
+print("\\n" + "="*70)
+print("Q21: Count word occurrences in file")
+print("="*70)
+
+def count_word_occurrences(filename, target_word):
+    try:
+        with open(filename, 'r') as file:
+            content = file.read().lower()
+            word_count = content.split().count(target_word.lower())
+        
+        print(f"Word '{target_word}' appears {word_count} times in '{filename}'")
+        
+        # Show context
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+            for i, line in enumerate(lines, 1):
+                if target_word.lower() in line.lower():
+                    print(f"  Line {i}: {line.strip()}")
+        
+        return word_count
+    except FileNotFoundError:
+        print(f"File '{filename}' not found")
+        return 0
+    except Exception as e:
+        print(f"Error counting words: {e}")
+        return 0
+
+# Create test file
+with open('word_count_test.txt', 'w') as f:
+    f.write("Python is great. Python is powerful.\\n")
+    f.write("I love Python programming.\\n")
+    f.write("Learning Python is fun!\\n")
+
+count_word_occurrences('word_count_test.txt', 'Python')
+
+# 22. Check if file is empty
+print("\\n" + "="*70)
+print("Q22: Check if file is empty")
+print("="*70)
+
+def is_file_empty(filename):
+    try:
+        # Method 1: Check size
+        size = os.path.getsize(filename)
+        print(f"Method 1 - File size: {size} bytes")
+        
+        # Method 2: Read content
+        with open(filename, 'r') as file:
+            content = file.read()
+            is_empty = len(content) == 0
+            print(f"Method 2 - File is {'empty' if is_empty else 'not empty'}")
+        
+        # Method 3: Seek and tell
+        with open(filename, 'r') as file:
+            file.seek(0, os.SEEK_END)
+            position = file.tell()
+            print(f"Method 3 - End position: {position}")
+        
+        return size == 0
+    except FileNotFoundError:
+        print(f"File '{filename}' not found")
+        return True
+    except Exception as e:
+        print(f"Error checking file: {e}")
+        return False
+
+print("Checking empty.txt:")
+is_file_empty('empty.txt')
+print("\\nChecking sample.txt:")
+is_file_empty('sample.txt')
+
+# 23. Log errors during file handling
+print("\\n" + "="*70)
+print("Q23: Log errors during file handling")
+print("="*70)
